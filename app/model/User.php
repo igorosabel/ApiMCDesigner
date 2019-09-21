@@ -7,12 +7,12 @@ class User extends OBase{
         'type'    => Base::PK,
         'comment' => 'Clave única de cada usuario'
       ],
-      'user' => [
+      'email' => [
         'type'    => Base::TEXT,
         'nullable' => false,
         'default' => null,
         'size' => 50,
-        'comment' => 'Nombre de usuario'
+        'comment' => 'Email del usuario'
       ],
       'pass' => [
         'type'    => Base::TEXT,
