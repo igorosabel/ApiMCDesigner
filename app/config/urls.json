@@ -59,6 +59,13 @@
           "action": "newDesign",
           "filter": "loginFilter",
           "comment": "Función para crear un nuevo diseño"
+        },
+        {
+          "id": "design",
+          "url": "/design",
+          "action": "design",
+          "filter": "loginFilter",
+          "comment": "Función para obtener los datos de un diseño"
         }
       ]
     }

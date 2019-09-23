@@ -135,4 +135,28 @@ class api extends OController{
 
     $this->getTemplate()->add('status', $status);
   }
+
+  /*
+   * Función para obtener los datos de un diseño
+   */
+  function design($req){
+    $status = 'ok';
+    $id     = Base::getParam('id', $req['url_params'], false);
+    $design = null;
+
+    if ($id===false){
+      $status = false;
+    }
+
+    if ($status=='ok'){
+      $design = new Design();
+      if (!$design->find(['id'=>$id])){
+        $status = 'error';
+        $design = null;
+      }
+    }
+
+    $this->getTemplate()->add('status', $status);
+    $this->getTemplate()->addPartial('design', 'api/design', ['design'=>$design, 'extra'=>'nourlencode']);
+  }
 }
