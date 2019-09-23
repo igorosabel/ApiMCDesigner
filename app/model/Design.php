@@ -54,4 +54,33 @@ class Design extends OBase{
 
     parent::load($table_name, $model);
   }
+
+  private $levels = null;
+
+  public function getLevels(){
+    if (is_null($this->levels)){
+      $this->loadLevels();
+    }
+    return $this->levels;
+  }
+
+  public function setLevels($levels){
+    $this->levels = $levels;
+  }
+
+  public function loadLevels(){
+    $sql = "SELECT * FROM `level` WHERE `id_design` = ? ORDER BY `height` ASC";
+    $this->db->query($sql, [$this->get('id')]);
+
+    $levels = [];
+
+    while ($res =   $this->db->next()){
+      $level = new Level();
+      $level->update($res);
+
+      array_push($levels, $level);
+    }
+
+    $this->setLevels($levels);
+  }
 }

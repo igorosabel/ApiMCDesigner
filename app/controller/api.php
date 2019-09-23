@@ -97,7 +97,7 @@ class api extends OController{
     }
 
     if ($status=='ok'){
-      $id_user = $req['filter']['status'];
+      $id_user = $req['filter']['id'];
       $list = $this->web_service->getDesignList($id_user);
     }
 
@@ -109,6 +109,30 @@ class api extends OController{
    * Función para crear un nuevo diseño
    */
   function newDesign($req){
-    
+    $status = 'ok';
+    $name   = Base::getParam('name',  $req['url_params'], false);
+    $size_x = Base::getParam('sizeX', $req['url_params'], false);
+    $size_y = Base::getParam('sizeY', $req['url_params'], false);
+
+    if ($name===false || $size_x===false || $size_y===false){
+      $status = 'error';
+    }
+
+    if ($status=='ok'){
+      $id_user = $req['filter']['id'];
+
+      $design = new Design();
+      $design->set('id_user', $id_user);
+      $design->set('name',    $name);
+      $design->set('slug',    Base::slugify($name));
+      $design->set('size_x',  $size_x);
+      $design->set('size_y',  $size_y);
+
+      $design->save();
+
+      $this->web_service->createNewLevel($design);
+    }
+
+    $this->getTemplate()->add('status', $status);
   }
 }

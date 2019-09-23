@@ -19,4 +19,24 @@ class webService extends OService{
 
     return $list;
   }
+
+  public function createNewLevel($design){
+    $levels = $design->getLevels();
+
+    $data = [];
+    for ($i=0; $i<$design->get('size_y'); $i++){
+      $row = [];
+      for ($j=0;$j<$design->get('size_x'); $j++){
+        array_push($row, 0);
+      }
+      array_push($data, $row);
+    }
+
+    $level = new Level();
+    $level->set('id_design', $design->get('id'));
+    $level->set('name',      'Level '.( count($levels) +1) );
+    $level->set('height',    ( count($levels) +1) );
+    $level->set('data',      json_encode($data) );
+    $level->save();
+  }
 }
