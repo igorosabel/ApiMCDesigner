@@ -159,4 +159,42 @@ class api extends OController{
     $this->getTemplate()->add('status', $status);
     $this->getTemplate()->addPartial('design', 'api/design', ['design'=>$design, 'extra'=>'nourlencode']);
   }
+
+  /*
+   * Función para actualizar los datos de un diseño
+   */
+  function updateDesign($req){
+    $status = 'ok';
+    $id     = Base::getParam('id',     $req['url_params'], false);
+    $name   = Base::getParam('name',   $req['url_params'], false);
+    $size_x = Base::getParam('sizeX',  $req['url_params'], false);
+    $size_y = Base::getParam('sizeY',  $req['url_params'], false);
+    $levels = Base::getParam('levels', $req['url_params'], false);
+
+    if ($id===false || $name===false || $size_x===false || $size_y===false || $levels===false){
+      $status = 'error';
+    }
+
+    if ($status=='ok'){
+      $des = new Design();
+      if ($des->find(['id'=>$id])){
+        $des->set('name', $name);
+        $des->set('slug', Base::slugify($name));
+        $des->set('size_x', $size_x);
+        $des->set('size_y', $size_y);
+
+        $des->save();
+
+        $updatedLevels = $this->web_service->updateLevels($levels);
+        if (!$updatedLevels){
+          $status = 'error';
+        }
+      }
+      else{
+        $status = 'error';
+      }
+    }
+
+    $this->getTemplate()->add('status', $status);
+  }
 }

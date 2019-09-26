@@ -66,6 +66,13 @@
           "action": "design",
           "filter": "loginFilter",
           "comment": "Función para obtener los datos de un diseño"
+        },
+        {
+          "id": "updateDesign",
+          "url": "/update-design",
+          "action": "updateDesign",
+          "filter": "loginFilter",
+          "comment": "Función para actualizar los datos de un diseño"
         }
       ]
     }

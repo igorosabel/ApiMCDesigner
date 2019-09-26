@@ -39,4 +39,20 @@ class webService extends OService{
     $level->set('data',      json_encode($data) );
     $level->save();
   }
+
+  public function updateLevels($levels){
+    foreach ($levels as $level){
+      $lev = new Level();
+      if ($lev->find(['id'=>$level['id']])){
+        $lev->set('name', $level['name']);
+        $lev->set('height', $level['height']);
+        $lev->set('data', json_encode($level['data']));
+        $lev->save();
+      }
+      else{
+        return false;
+      }
+    }
+    return true;
+  }
 }
