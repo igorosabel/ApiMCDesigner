@@ -11,8 +11,8 @@ class api extends OController{
    */
   function login($req){
     $status = 'ok';
-    $email  = Base::getParam('email', $req['url_params'], false);
-    $pass   = Base::getParam('pass',  $req['url_params'], false);
+    $email  = OTools::getParam('email', $req['params'], false);
+    $pass   = OTools::getParam('pass',  $req['params'], false);
 
     $id    = 'null';
     $token = '';
@@ -51,8 +51,8 @@ class api extends OController{
    */
   function register($req){
     $status = 'ok';
-    $email  = Base::getParam('email', $req['url_params'], false);
-    $pass   = Base::getParam('pass',  $req['url_params'], false);
+    $email  = OTools::getParam('email', $req['params'], false);
+    $pass   = OTools::getParam('pass',  $req['params'], false);
     $id     = 'null';
     $token  = '';
 
@@ -92,12 +92,12 @@ class api extends OController{
     $status = 'ok';
     $list   = [];
 
-    if ($req['filter']['status']!='ok'){
+    if ($req['loginFilter']['status']!='ok'){
       $status = 'error';
     }
 
     if ($status=='ok'){
-      $id_user = $req['filter']['id'];
+      $id_user = $req['loginFilter']['id'];
       $list = $this->web_service->getDesignList($id_user);
     }
 
@@ -110,21 +110,21 @@ class api extends OController{
    */
   function newDesign($req){
     $status = 'ok';
-    $name   = Base::getParam('name',  $req['url_params'], false);
-    $size_x = Base::getParam('sizeX', $req['url_params'], false);
-    $size_y = Base::getParam('sizeY', $req['url_params'], false);
+    $name   = OTools::getParam('name',  $req['params'], false);
+    $size_x = OTools::getParam('sizeX', $req['params'], false);
+    $size_y = OTools::getParam('sizeY', $req['params'], false);
 
     if ($name===false || $size_x===false || $size_y===false){
       $status = 'error';
     }
 
     if ($status=='ok'){
-      $id_user = $req['filter']['id'];
+      $id_user = $req['loginFilter']['id'];
 
       $design = new Design();
       $design->set('id_user', $id_user);
       $design->set('name',    $name);
-      $design->set('slug',    Base::slugify($name));
+      $design->set('slug',    OTools::slugify($name));
       $design->set('size_x',  $size_x);
       $design->set('size_y',  $size_y);
 
@@ -141,7 +141,7 @@ class api extends OController{
    */
   function design($req){
     $status = 'ok';
-    $id     = Base::getParam('id', $req['url_params'], false);
+    $id     = OTools::getParam('id', $req['params'], false);
     $design = null;
 
     if ($id===false){
@@ -165,11 +165,11 @@ class api extends OController{
    */
   function updateDesign($req){
     $status = 'ok';
-    $id     = Base::getParam('id',     $req['url_params'], false);
-    $name   = Base::getParam('name',   $req['url_params'], false);
-    $size_x = Base::getParam('sizeX',  $req['url_params'], false);
-    $size_y = Base::getParam('sizeY',  $req['url_params'], false);
-    $levels = Base::getParam('levels', $req['url_params'], false);
+    $id     = OTools::getParam('id',     $req['params'], false);
+    $name   = OTools::getParam('name',   $req['params'], false);
+    $size_x = OTools::getParam('sizeX',  $req['params'], false);
+    $size_y = OTools::getParam('sizeY',  $req['params'], false);
+    $levels = OTools::getParam('levels', $req['params'], false);
 
     if ($id===false || $name===false || $size_x===false || $size_y===false || $levels===false){
       $status = 'error';
@@ -179,7 +179,7 @@ class api extends OController{
       $des = new Design();
       if ($des->find(['id'=>$id])){
         $des->set('name', $name);
-        $des->set('slug', Base::slugify($name));
+        $des->set('slug', OTools::slugify($name));
         $des->set('size_x', $size_x);
         $des->set('size_y', $size_y);
 

@@ -1,51 +1,51 @@
 <?php
-class Design extends OBase{
+class Design extends OModel{
   function __construct(){
     $table_name  = 'design';
     $model = [
       'id' => [
-        'type'    => Base::PK,
+        'type'    => OCore::PK,
         'comment' => 'Clave única de cada diseño'
       ],
       'id_user' => [
-        'type'    => Base::NUM,
+        'type'    => OCore::NUM,
         'nullable' => false,
         'default' => null,
         'ref' => 'user.id',
         'comment' => 'Id del usuario que hace el diseño'
       ],
       'name' => [
-        'type'    => Base::TEXT,
+        'type'    => OCore::TEXT,
         'nullable' => false,
         'default' => null,
         'size' => 100,
         'comment' => 'Nombre del diseño'
       ],
       'slug' => [
-        'type'    => Base::TEXT,
+        'type'    => OCore::TEXT,
         'nullable' => false,
         'default' => null,
         'size' => 100,
         'comment' => 'Slug del nombre del diseño'
       ],
       'size_x' => [
-        'type'    => Base::NUM,
+        'type'    => OCore::NUM,
         'nullable' => false,
         'default' => '0',
         'comment' => 'Anchura del diseño'
       ],
       'size_y' => [
-        'type'    => Base::NUM,
+        'type'    => OCore::NUM,
         'nullable' => false,
         'default' => '0',
         'comment' => 'Altura del diseño'
       ],
       'created_at' => [
-        'type'    => Base::CREATED,
+        'type'    => OCore::CREATED,
         'comment' => 'Fecha de creación del registro'
       ],
       'updated_at' => [
-        'type'    => Base::UPDATED,
+        'type'    => OCore::UPDATED,
         'nullable' => true,
         'default' => null,
         'comment' => 'Fecha de última modificación del registro'
