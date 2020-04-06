@@ -1,11 +1,11 @@
 <?php
 class webService extends OService{
-  function __construct($controller=null){
-    $this->setController($controller);
+  function __construct(){
+    $this->loadService();
   }
 
   public function getDesignList($id_user){
-    $db = $this->getController()->getDB();
+    $db = new ODB();
     $sql = "SELECT * FROM `design` WHERE `id_user` = ? ORDER BY `updated_at`";
     $db->query($sql, [$id_user]);
     $list = [];
