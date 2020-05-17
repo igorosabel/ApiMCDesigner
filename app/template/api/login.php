@@ -1,5 +1,5 @@
 {
-  "status": "{{status}}",
-  "id": {{id}},
-  "token": "{{token}}"
+	"status": "{{status}}",
+	"id": {{id}},
+	"token": "{{token}}"
 }

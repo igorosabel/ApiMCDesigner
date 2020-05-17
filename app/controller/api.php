@@ -1,200 +1,237 @@
-<?php
+<?php declare(strict_types=1);
 class api extends OController{
-  private $web_service;
+	private ?webService $web_service = null;
 
-  function __construct(){
-    $this->web_service = new webService();
-  }
+	function __construct(){
+		$this->web_service = new webService();
+	}
 
-  /*
-   * Función para iniciar sesión en la aplicación
-   */
-  function login($req){
-    $status = 'ok';
-    $email  = OTools::getParam('email', $req['params'], false);
-    $pass   = OTools::getParam('pass',  $req['params'], false);
+	/**
+	 * Función para iniciar sesión en la aplicación
+	 *
+	 * @param ORequest $req Request object with method, headers, parameters and filters used
+	 *
+	 * @return void
+	 */
+	function login(ORequest $req): void {
+		$status = 'ok';
+		$email  = $req->getParamString('email');
+		$pass   = $req->getParamString('pass');
 
-    $id    = 'null';
-    $token = '';
+		$id    = 'null';
+		$token = '';
 
-    if ($email===false || $pass===false){
-      $status = 'error';
-    }
+		if (is_null($email) || is_null($pass)) {
+			$status = 'error';
+		}
 
-    if ($status=='ok'){
-      $u = new User();
-      if ($u->find(['email'=>$email])){
-        if (password_verify($pass, $u->get('pass'))){
-          $id = $u->get('id');
+		if ($status=='ok') {
+			$u = new User();
+			if ($u->find(['email'=>$email])) {
+				if (password_verify($pass, $u->get('pass'))) {
+					$id = $u->get('id');
 
-          $tk = new OToken($this->getConfig()->getExtra('secret'));
-          $tk->addParam('id',   $id);
-          $tk->addParam('email', $email);
-          $tk->addParam('exp', mktime() + (24 * 60 * 60));
-          $token = $tk->getToken();
-        }
-        else{
-          $status = 'error';
-        }
-      }
-      else{
-        $status = 'error';
-      }
-    }
+					$tk = new OToken($this->getConfig()->getExtra('secret'));
+					$tk->addParam('id',   $id);
+					$tk->addParam('email', $email);
+					$tk->addParam('exp', mktime() + (24 * 60 * 60));
+					$token = $tk->getToken();
+				}
+				else {
+					$status = 'error';
+				}
+			}
+			else {
+				$status = 'error';
+			}
+		}
 
-    $this->getTemplate()->add('status', $status);
-    $this->getTemplate()->add('id',     $id);
-    $this->getTemplate()->add('token',  $token);
-  }
-  /*
-   * Función para registrarse en la aplicación
-   */
-  function register($req){
-    $status = 'ok';
-    $email  = OTools::getParam('email', $req['params'], false);
-    $pass   = OTools::getParam('pass',  $req['params'], false);
-    $id     = 'null';
-    $token  = '';
+		$this->getTemplate()->add('status', $status);
+		$this->getTemplate()->add('id',     $id);
+		$this->getTemplate()->add('token',  $token);
+	}
 
-    if ($email===false || $pass===false){
-      $status = 'error';
-    }
+	/**
+	 * Función para registrarse en la aplicación
+	 *
+	 * @param ORequest $req Request object with method, headers, parameters and filters used
+	 *
+	 * @return void
+	 */
+	function register(ORequest $req): void {
+		$status = 'ok';
+		$email  = $req->getParamString('email');
+		$pass   = $req->getParamString('pass');
+		$id     = 'null';
+		$token  = '';
 
-    if ($status=='ok'){
-      $u = new User();
-      if ($u->find(['email'=>$email])){
-        $status = 'error-user';
-      }
-      else{
-        $u->set('email', $email);
-        $u->set('pass',  password_hash($pass, PASSWORD_BCRYPT));
-        $u->save();
+		if (is_null($email) || is_null($pass)) {
+			$status = 'error';
+		}
 
-        $id = $u->get('id');
+		if ($status=='ok') {
+			$u = new User();
+			if ($u->find(['email'=>$email])) {
+				$status = 'error-user';
+			}
+			else {
+				$u->set('email', $email);
+				$u->set('pass',  password_hash($pass, PASSWORD_BCRYPT));
+				$u->save();
 
-        $tk = new OToken($this->getConfig()->getExtra('secret'));
-        $tk->addParam('id',   $id);
-        $tk->addParam('email', $email);
-        $tk->addParam('exp', mktime() + (24 * 60 * 60));
-        $token = $tk->getToken();
-      }
-    }
+				$id = $u->get('id');
 
-    $this->getTemplate()->add('status', $status);
-    $this->getTemplate()->add('id',     $id);
-    $this->getTemplate()->add('token',  $token);
-  }
+				$tk = new OToken($this->getConfig()->getExtra('secret'));
+				$tk->addParam('id',   $id);
+				$tk->addParam('email', $email);
+				$tk->addParam('exp', mktime() + (24 * 60 * 60));
+				$token = $tk->getToken();
+			}
+		}
 
-  /*
-   * Función para obtener la lista de diseños de un usuario
-   */
-  function loadDesigns($req){
-    $status = 'ok';
-    $list   = [];
+		$this->getTemplate()->add('status', $status);
+		$this->getTemplate()->add('id',     $id);
+		$this->getTemplate()->add('token',  $token);
+	}
 
-    if ($req['loginFilter']['status']!='ok'){
-      $status = 'error';
-    }
+	/**
+	 * Función para obtener la lista de diseños de un usuario
+	 *
+	 * @param ORequest $req Request object with method, headers, parameters and filters used
+	 *
+	 * @return void
+	 */
+	function loadDesigns(ORequest $req): void {
+		$status = 'ok';
+		$list   = [];
+		$filter = $req->getFilter('loginFilter');
 
-    if ($status=='ok'){
-      $id_user = $req['loginFilter']['id'];
-      $list = $this->web_service->getDesignList($id_user);
-    }
+		if (is_null($filter) || !array_key_exists('id', $filter)) {
+			$status = 'error';
+		}
 
-    $this->getTemplate()->add('status', $status);
-    $this->getTemplate()->addPartial('list', 'api/design_list', ['list'=>$list, 'extra'=>'nourlencode']);
-  }
+		if ($status=='ok') {
+			$list = $this->web_service->getDesignList($filter['id']);
+		}
 
-  /*
-   * Función para crear un nuevo diseño
-   */
-  function newDesign($req){
-    $status = 'ok';
-    $name   = OTools::getParam('name',  $req['params'], false);
-    $size_x = OTools::getParam('sizeX', $req['params'], false);
-    $size_y = OTools::getParam('sizeY', $req['params'], false);
+		$this->getTemplate()->add('status', $status);
+		$this->getTemplate()->addPartial('list', 'api/design_list', ['list'=>$list, 'extra'=>'nourlencode']);
+	}
 
-    if ($name===false || $size_x===false || $size_y===false){
-      $status = 'error';
-    }
+	/**
+	 * Función para crear un nuevo diseño
+	 *
+	 * @param ORequest $req Request object with method, headers, parameters and filters used
+	 *
+	 * @return void
+	 */
+	function newDesign(ORequest $req): void {
+		$status = 'ok';
+		$name   = $req->getParamString('name');
+		$size_x = $req->getParamInt('sizeX');
+		$size_y = $req->getParamInt('sizeY');
+		$filter = $req->getFilter('loginFilter');
 
-    if ($status=='ok'){
-      $id_user = $req['loginFilter']['id'];
+		if (is_null($name) || is_null($size_x) || is_null($size_y) || is_null($filter) || !array_key_exists('id', $filter)) {
+			$status = 'error';
+		}
 
-      $design = new Design();
-      $design->set('id_user', $id_user);
-      $design->set('name',    $name);
-      $design->set('slug',    OTools::slugify($name));
-      $design->set('size_x',  $size_x);
-      $design->set('size_y',  $size_y);
+		if ($status=='ok') {
+			$design = new Design();
+			$design->set('id_user', $filter['id']);
+			$design->set('name',    $name);
+			$design->set('slug',    OTools::slugify($name));
+			$design->set('size_x',  $size_x);
+			$design->set('size_y',  $size_y);
 
-      $design->save();
+			$design->save();
 
-      $this->web_service->createNewLevel($design);
-    }
+			$this->web_service->createNewLevel($design);
+		}
 
-    $this->getTemplate()->add('status', $status);
-  }
+		$this->getTemplate()->add('status', $status);
+	}
 
-  /*
-   * Función para obtener los datos de un diseño
-   */
-  function design($req){
-    $status = 'ok';
-    $id     = OTools::getParam('id', $req['params'], false);
-    $design = null;
+	/**
+	 * Función para obtener los datos de un diseño
+	 *
+	 * @param ORequest $req Request object with method, headers, parameters and filters used
+	 *
+	 * @return void
+	 */
+	function design(ORequest $req): void {
+		$status = 'ok';
+		$id     = $req->getParamInt('id');
+		$design = null;
+		$filter = $req->getFilter('loginFilter');
 
-    if ($id===false){
-      $status = false;
-    }
+		if (is_null($id) || is_null($filter) || !array_key_exists('id', $filter)) {
+			$status = false;
+		}
 
-    if ($status=='ok'){
-      $design = new Design();
-      if (!$design->find(['id'=>$id])){
-        $status = 'error';
-        $design = null;
-      }
-    }
+		if ($status=='ok') {
+			$design = new Design();
+			if ($design->find(['id'=>$id])) {
+				if ($design->get('id_user')!=$filter['id']) {
+					$status = 'error';
+					$design = null;
+				}
+			}
+			else {
+				$status = 'error';
+				$design = null;
+			}
+		}
 
-    $this->getTemplate()->add('status', $status);
-    $this->getTemplate()->addPartial('design', 'api/design', ['design'=>$design, 'extra'=>'nourlencode']);
-  }
+		$this->getTemplate()->add('status', $status);
+		$this->getTemplate()->addPartial('design', 'api/design', ['design'=>$design, 'extra'=>'nourlencode']);
+	}
 
-  /*
-   * Función para actualizar los datos de un diseño
-   */
-  function updateDesign($req){
-    $status = 'ok';
-    $id     = OTools::getParam('id',     $req['params'], false);
-    $name   = OTools::getParam('name',   $req['params'], false);
-    $size_x = OTools::getParam('sizeX',  $req['params'], false);
-    $size_y = OTools::getParam('sizeY',  $req['params'], false);
-    $levels = OTools::getParam('levels', $req['params'], false);
+	/*
+	 * Función para actualizar los datos de un diseño
+	 *
+	 * @param ORequest $req Request object with method, headers, parameters and filters used
+	 *
+	 * @return void
+	 */
+	function updateDesign(ORequest $req): void {
+		$status = 'ok';
+		$id     = $req->getParamInt('id');
+		$name   = $req->getParamString('name');
+		$size_x = $req->getParamInt('sizeX');
+		$size_y = $req->getParamInt('sizeY');
+		$levels = $req->getParam('levels');
+		$filter = $req->getFilter('loginFilter');
 
-    if ($id===false || $name===false || $size_x===false || $size_y===false || $levels===false){
-      $status = 'error';
-    }
+		if (is_null($id) || is_null($name) || is_null($size_x) || is_null($size_y) || is_null($levels) || is_null($filter) || !array_key_exists('id', $filter)) {
+			$status = 'error';
+		}
 
-    if ($status=='ok'){
-      $des = new Design();
-      if ($des->find(['id'=>$id])){
-        $des->set('name', $name);
-        $des->set('slug', OTools::slugify($name));
-        $des->set('size_x', $size_x);
-        $des->set('size_y', $size_y);
+		if ($status=='ok') {
+			$design = new Design();
+			if ($design->find(['id'=>$id])) {
+				if ($design->get('id_user')==$filter['id']) {
+					$design->set('name', $name);
+					$design->set('slug', OTools::slugify($name));
+					$design->set('size_x', $size_x);
+					$design->set('size_y', $size_y);
+	
+					$design->save();
+	
+					$updatedLevels = $this->web_service->updateLevels($levels);
+					if (!$updatedLevels) {
+						$status = 'error';
+					}
+				}
+				else {
+					$status = 'error';
+				}
+			}
+			else {
+				$status = 'error';
+			}
+		}
 
-        $des->save();
-
-        $updatedLevels = $this->web_service->updateLevels($levels);
-        if (!$updatedLevels){
-          $status = 'error';
-        }
-      }
-      else{
-        $status = 'error';
-      }
-    }
-
-    $this->getTemplate()->add('status', $status);
-  }
+		$this->getTemplate()->add('status', $status);
+	}
 }

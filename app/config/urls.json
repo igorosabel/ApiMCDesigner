@@ -1,80 +1,80 @@
 {
-  "urls": [
-    {
-      "id": "pages",
-      "module": "home",
-      "urls": [
-        {
-          "id": "closed",
-          "url": "/closed",
-          "module": "home",
-          "action": "closed",
-          "comment": "Página temporal, sitio cerrado",
-          "layout": "blank"
-        },
-        {
-          "id": "index",
-          "url": "/",
-          "module": "home",
-          "action": "index",
-          "comment": "Home pública"
-        },
-        {
-          "id": "notFound",
-          "url": "/not-found",
-          "module": "home",
-          "action": "notFound",
-          "comment": "Página de error 404"
-        }
-      ]
-    },
-    {
-      "id": "api",
-      "prefix": "/api",
-      "module": "api",
-      "type": "json",
-      "urls": [
-        {
-          "id": "login",
-          "url": "/login",
-          "action": "login",
-          "comment": "Función para iniciar sesión en la aplicación"
-        },
-        {
-          "id": "register",
-          "url": "/register",
-          "action": "register",
-          "comment": "Función para registrarse en la aplicación"
-        },
-        {
-          "id": "loadDesigns",
-          "url": "/load-designs",
-          "action": "loadDesigns",
-          "filter": "loginFilter",
-          "comment": "Función para obtener la lista de diseños de un usuario"
-        },
-        {
-          "id": "newDesign",
-          "url": "/new-design",
-          "action": "newDesign",
-          "filter": "loginFilter",
-          "comment": "Función para crear un nuevo diseño"
-        },
-        {
-          "id": "design",
-          "url": "/design",
-          "action": "design",
-          "filter": "loginFilter",
-          "comment": "Función para obtener los datos de un diseño"
-        },
-        {
-          "id": "updateDesign",
-          "url": "/update-design",
-          "action": "updateDesign",
-          "filter": "loginFilter",
-          "comment": "Función para actualizar los datos de un diseño"
-        }
-      ]
-    }
-  ]
+	"urls": [
+		{
+			"id": "pages",
+			"module": "home",
+			"urls": [
+				{
+					"id": "closed",
+					"url": "/closed",
+					"module": "home",
+					"action": "closed",
+					"comment": "Página temporal, sitio cerrado",
+					"layout": "blank"
+				},
+				{
+					"id": "index",
+					"url": "/",
+					"module": "home",
+					"action": "index",
+					"comment": "Home pública"
+				},
+				{
+					"id": "notFound",
+					"url": "/not-found",
+					"module": "home",
+					"action": "notFound",
+					"comment": "Página de error 404"
+				}
+			]
+		},
+		{
+			"id": "api",
+			"prefix": "/api",
+			"module": "api",
+			"type": "json",
+			"urls": [
+				{
+					"id": "login",
+					"url": "/login",
+					"action": "login",
+					"comment": "Función para iniciar sesión en la aplicación"
+				},
+				{
+					"id": "register",
+					"url": "/register",
+					"action": "register",
+					"comment": "Función para registrarse en la aplicación"
+				},
+				{
+					"id": "loadDesigns",
+					"url": "/load-designs",
+					"action": "loadDesigns",
+					"filter": "loginFilter",
+					"comment": "Función para obtener la lista de diseños de un usuario"
+				},
+				{
+					"id": "newDesign",
+					"url": "/new-design",
+					"action": "newDesign",
+					"filter": "loginFilter",
+					"comment": "Función para crear un nuevo diseño"
+				},
+				{
+					"id": "design",
+					"url": "/design",
+					"action": "design",
+					"filter": "loginFilter",
+					"comment": "Función para obtener los datos de un diseño"
+				},
+				{
+					"id": "updateDesign",
+					"url": "/update-design",
+					"action": "updateDesign",
+					"filter": "loginFilter",
+					"comment": "Función para actualizar los datos de un diseño"
+				}
+			]
+		}
+	]
 }

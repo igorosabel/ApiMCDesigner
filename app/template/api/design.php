@@ -1,4 +1,4 @@
 {
-  "status": "{{status}}",
-  "design": {{design}}
+	"status": "{{status}}",
+	"design": {{design}}
 }
