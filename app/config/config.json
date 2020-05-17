@@ -1,15 +1,4 @@
 {
-  "base_modules": {
-    "browser": false,
-    "email": true,
-    "email_smtp": false,
-    "ftp": false,
-    "image": false,
-    "pdf": false,
-    "translate": false,
-    "crypt": false,
-    "file": false
-  },
   "db": {
     "host": "localhost",
     "user": "mcdesigner",
@@ -18,5 +7,8 @@
   },
   "base_url": "https://apimcdesigner.osumi.es",
   "lang": "es",
-  "debug": false
+  "log_level": "ERROR",
+  "extra": {
+  	"secret": "6fcad1ad0179a42c8f1146c0716ef7d78adc7576"
+  }
 }
