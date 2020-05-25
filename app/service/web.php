@@ -35,9 +35,11 @@ class webService extends OService {
 	 *
 	 * @param Design $design Diseño al que añadir un nivel
 	 *
-	 * @return void
+	 * @param string $name Nombre del diseño (opcional)
+	 *
+	 * @return Level Devuelve el nuevo nivel creado
 	 */
-	public function createNewLevel(Design $design): void {
+	public function createNewLevel(Design $design, string $name=null): Level {
 		$levels = $design->getLevels();
 
 		$data = [];
@@ -51,10 +53,12 @@ class webService extends OService {
 
 		$level = new Level();
 		$level->set('id_design', $design->get('id'));
-		$level->set('name',      'Level '.( count($levels) +1) );
+		$level->set('name',      (is_null($name)) ? 'Level '.( count($levels) +1) : $name );
 		$level->set('height',    ( count($levels) +1) );
 		$level->set('data',      json_encode($data) );
 		$level->save();
+
+		return $level;
 	}
 
 	/**

@@ -215,9 +215,9 @@ class api extends OController{
 					$design->set('slug', OTools::slugify($name));
 					$design->set('size_x', $size_x);
 					$design->set('size_y', $size_y);
-	
+
 					$design->save();
-	
+
 					$updatedLevels = $this->web_service->updateLevels($levels);
 					if (!$updatedLevels) {
 						$status = 'error';
@@ -233,5 +233,42 @@ class api extends OController{
 		}
 
 		$this->getTemplate()->add('status', $status);
+	}
+
+	/**
+	 * Función para crear un nuevo nivel en un diseño
+	 *
+	 * @param ORequest $req Request object with method, headers, parameters and filters used
+	 *
+	 * @return void
+	 */
+	function newLevel(ORequest $req): void {
+		$status    = 'ok';
+		$id_design = $req->getParamInt('idDesign');
+		$name      = $req->getParamString('name');
+		$filter    = $req->getFilter('loginFilter');
+		$new_level = null;
+
+		if (is_null($id_design) || is_null($name) || is_null($filter) || !array_key_exists('id', $filter)) {
+			$status = 'error';
+		}
+
+		if ($status=='ok') {
+			$design = new Design();
+			if ($design->find(['id'=>$id_design])){
+				if ($design->get('id_user')==$filter['id']){
+					$new_level = $this->web_service->createNewLevel($design, $name);
+				}
+				else {
+					$status = 'error';
+				}
+			}
+			else {
+				$status = 'error';
+			}
+		}
+
+		$this->getTemplate()->add('status', $status);
+		$this->getTemplate()->addPartial('level', 'api/level', ['level' => $new_level, 'extra' => 'nourlencode']);
 	}
 }

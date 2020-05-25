@@ -73,6 +73,13 @@
 					"action": "updateDesign",
 					"filter": "loginFilter",
 					"comment": "Función para actualizar los datos de un diseño"
+				},
+				{
+					"id": "newLevel",
+					"url": "/new-level",
+					"action": "newLevel",
+					"filter": "loginFilter",
+					"comment": "Función para crear un nuevo nivel en un diseño"
 				}
 			]
 		}
