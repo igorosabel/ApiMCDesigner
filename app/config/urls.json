@@ -80,6 +80,13 @@
 					"action": "newLevel",
 					"filter": "loginFilter",
 					"comment": "Función para crear un nuevo nivel en un diseño"
+				},
+				{
+					"id": "renameLevel",
+					"url": "/rename-level",
+					"action": "renameLevel",
+					"filter": "loginFilter",
+					"comment": "Función para renombrar un nivel de un diseño"
 				}
 			]
 		}
