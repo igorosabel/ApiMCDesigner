@@ -62,6 +62,28 @@ class webService extends OService {
 	}
 
 	/**
+	 * Copia un nivel de un diseño
+	 *
+	 * @param Design $design Diseño al que añadir un nivel
+	 *
+	 * @param Level $level Nivel a copiar
+	 *
+	 * @return Level Devuelve el nuevo nivel creado
+	 */
+	public function copyLevel(Design $design, Level $level): Level {
+		$levels = $design->getLevels();
+
+		$new_level = new Level();
+		$new_level->set('id_design', $design->get('id'));
+		$new_level->set('name',      'Level '.( count($levels) +1) );
+		$new_level->set('height',    ( count($levels) +1) );
+		$new_level->set('data',      $level->get('data') );
+		$new_level->save();
+
+		return $new_level;
+	}
+
+	/**
 	 * Actualiza los niveles de un diseño
 	 *
 	 * @param array $levels Lista de niveles

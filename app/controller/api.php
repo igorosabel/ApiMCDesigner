@@ -315,4 +315,46 @@ class api extends OController{
 
 		$this->getTemplate()->add('status', $status);
 	}
+
+	/**
+	 * Función para copiar un nivel de un diseño
+	 *
+	 * @param ORequest $req Request object with method, headers, parameters and filters used
+	 *
+	 * @return void
+	 */
+	function copyLevel(ORequest $req): void {
+		$status    = 'ok';
+		$id        = $req->getParamInt('id');
+		$filter    = $req->getFilter('loginFilter');
+		$new_level = null;
+
+		if (is_null($id) || is_null($filter) || !array_key_exists('id', $filter)) {
+			$status = 'error';
+		}
+
+		if ($status=='ok') {
+			$level = new Level();
+			if ($level->find(['id'=>$id])){
+				$design = new Design();
+				if ($design->find(['id'=>$level->get('id_design')])) {
+					if ($design->get('id_user')==$filter['id']){
+						$new_level = $this->web_service->copyLevel($design, $level);
+					}
+					else {
+						$status = 'error';
+					}
+				}
+				else {
+					$status = 'error';
+				}
+			}
+			else {
+				$status = 'error';
+			}
+		}
+
+		$this->getTemplate()->add('status', $status);
+		$this->getTemplate()->addPartial('level', 'api/level', ['level' => $new_level, 'extra' => 'nourlencode']);
+	}
 }

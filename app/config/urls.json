@@ -87,6 +87,13 @@
 					"action": "renameLevel",
 					"filter": "loginFilter",
 					"comment": "Función para renombrar un nivel de un diseño"
+				},
+				{
+					"id": "copyLevel",
+					"url": "/copy-level",
+					"action": "copyLevel",
+					"filter": "loginFilter",
+					"comment": "Función para copiar un nivel de un diseño"
 				}
 			]
 		}
