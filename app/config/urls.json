@@ -94,6 +94,13 @@
 					"action": "copyLevel",
 					"filter": "loginFilter",
 					"comment": "Función para copiar un nivel de un diseño"
+				},
+				{
+					"id": "deleteLevel",
+					"url": "/delete-level",
+					"action": "deleteLevel",
+					"filter": "loginFilter",
+					"comment": "Función para borrar un nivel de un diseño"
 				}
 			]
 		}
