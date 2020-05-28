@@ -54,6 +54,13 @@
 					"comment": "Función para obtener la lista de diseños de un usuario"
 				},
 				{
+					"id": "deleteDesign",
+					"url": "/delete-design",
+					"action": "deleteDesign",
+					"filter": "loginFilter",
+					"comment": "Función para borrar un diseño"
+				},
+				{
 					"id": "newDesign",
 					"url": "/new-design",
 					"action": "newDesign",

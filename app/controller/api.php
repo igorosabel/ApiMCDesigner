@@ -119,6 +119,40 @@ class api extends OController{
 	}
 
 	/**
+	 * Función para borrar un diseño
+	 *
+	 * @param ORequest $req Request object with method, headers, parameters and filters used
+	 *
+	 * @return void
+	 */
+	function deleteDesign(ORequest $req): void {
+		$status = 'ok';
+		$id     = $req->getParamInt('id');
+		$filter = $req->getFilter('loginFilter');
+
+		if (is_null($id) || is_null($filter) || !array_key_exists('id', $filter)) {
+			$status = 'error';
+		}
+
+		if ($status=='ok') {
+			$design = new Design();
+			if ($design->find(['id'=>$id])) {
+				if ($design->get('id_user')==$filter['id']) {
+					$design->deleteFull();
+				}
+				else {
+					$status = 'error';
+				}
+			}
+			else {
+				$status = 'error';
+			}
+		}
+
+		$this->getTemplate()->add('status', $status);
+	}
+
+	/**
 	 * Función para crear un nuevo diseño
 	 *
 	 * @param ORequest $req Request object with method, headers, parameters and filters used

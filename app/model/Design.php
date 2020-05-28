@@ -103,4 +103,18 @@ class Design extends OModel {
 
 		$this->setLevels($levels);
 	}
+
+	/**
+	 * Borra un diseño con todos sus niveles
+	 *
+	 * @return void
+	 */
+	 public function deleteFull() {
+		 $levels = $this->getLevels();
+		 foreach ($levels as $level) {
+			 $level->delete();
+		 }
+
+		 $this->delete();
+	 }
 }
