@@ -31,6 +31,56 @@ class webService extends OService {
 	}
 
 	/**
+	 * Actualiza el tamaño de los niveles del diseño
+	 *
+	 * @param Design $design Diseño a actualizar
+	 *
+	 * @param int $size_x Tamaño X de los niveles del diseño
+	 *
+	 * @param int $size_y Tamaño Y de los niveles del diseño
+	 *
+	 * @return void
+	 */
+	public function updateDesignSize(Design $design, int $size_x, int $size_y): void {
+		$levels = $design->getLevels();
+		foreach ($levels as $level) {
+			$data = json_decode($level->get('data'), true);
+
+			// Si el diseño tiene más líneas que las que tiene que haber ahora, corto la lista de líneas
+			if (count($data)>$size_y) {
+				array_splice($data, $size_y);
+			}
+			else {
+				// Si faltan líneas por añadir, las añado en blanco
+				for ($i=0; $i<($size_y-count($data)); $i++) {
+					array_push($data, []);
+				}
+			}
+
+			// Recorro cada línea comprobando columnas
+			for ($i=0; $i<count($data); $i++) {
+				// Si el diseño tiene más columnas que las que tiene que haber ahora, corto la línea
+				if (count($data[$i])>$size_x) {
+					array_splice($data[$i], $size_x);
+				}
+				else {
+					// Si faltan columnas por añadir, las añado con valor 0
+					for ($j=0; $j<($size_x-count($data[i])); $j++) {
+						array_push($data[$i], 0);
+					}
+				}
+			}
+
+			$level->set('data', json_encode($data));
+			$level->save();
+		}
+
+		$design->set('size_x', $size_x);
+		$design->set('size_y', $size_y);
+		$design->save();
+	}
+
+	/**
 	 * Crea un nuevo nivel en blanco para un diseño
 	 *
 	 * @param Design $design Diseño al que añadir un nivel

@@ -61,6 +61,13 @@
 					"comment": "Función para borrar un diseño"
 				},
 				{
+					"id": "updateDesignSettings",
+					"url": "/update-design-settings",
+					"action": "updateDesignSettings",
+					"filter": "loginFilter",
+					"comment": "Función para editar los detalles de un diseño"
+				},
+				{
 					"id": "newDesign",
 					"url": "/new-design",
 					"action": "newDesign",
