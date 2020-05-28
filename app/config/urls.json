@@ -47,6 +47,13 @@
 					"comment": "Función para registrarse en la aplicación"
 				},
 				{
+					"id": "updateProfile",
+					"url": "/update-profile",
+					"action": "updateProfile",
+					"filter": "loginFilter",
+					"comment": "Función para actualizar los datos de un usuario"
+				},
+				{
 					"id": "loadDesigns",
 					"url": "/load-designs",
 					"action": "loadDesigns",

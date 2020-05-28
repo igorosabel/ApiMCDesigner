@@ -95,6 +95,50 @@ class api extends OController{
 	}
 
 	/**
+	 * Función para actualizar los datos de un usuario
+	 *
+	 * @param ORequest $req Request object with method, headers, parameters and filters used
+	 *
+	 * @return void
+	 */
+	function updateProfile(ORequest $req): void {
+		$status    = 'ok';
+		$email     = $req->getParamString('email');
+		$old_pass  = $req->getParamString('oldPass');
+		$new_pass  = $req->getParamString('newPass');
+		$conf_pass = $req->getParamString('confPass');
+		$filter    = $req->getFilter('loginFilter');
+
+		if (is_null($email) || is_null($filter) || !array_key_exists('id', $filter)) {
+			$status = 'error';
+		}
+
+		if ($status=='ok') {
+			$u = new User();
+			if ($u->find(['id'=>$filter['id']])) {
+				$u->set('email', $email);
+				if ($old_pass!='' && $new_pass!='' && $conf_pass!='' && $new_pass==$conf_pass) {
+					if (password_verify($old_pass, $u->get('pass'))) {
+						$u->set('pass', password_hash($new_pass, PASSWORD_BCRYPT));
+					}
+					else {
+						$status = 'pass-error';
+					}
+				}
+
+				if ($status=='ok') {
+					$u->save();
+				}
+			}
+			else {
+				$status = 'error';
+			}
+		}
+
+		$this->getTemplate()->add('status', $status);
+	}
+
+	/**
 	 * Función para obtener la lista de diseños de un usuario
 	 *
 	 * @param ORequest $req Request object with method, headers, parameters and filters used
