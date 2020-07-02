@@ -7,7 +7,7 @@ class home extends OModule {
 	 *
 	 * @return void
 	 */
-	function closed(ORequest $req): void {
+	public function closed(ORequest $req): void {
 		OUrl::goToUrl('https://mcdesigner.osumi.es');
 	}
 
@@ -18,7 +18,7 @@ class home extends OModule {
 	 *
 	 * @return void
 	 */
-	function index(ORequest $req): void {
+	public function index(ORequest $req): void {
 		OUrl::goToUrl('https://mcdesigner.osumi.es');
 	}
 
@@ -29,7 +29,7 @@ class home extends OModule {
 	 *
 	 * @return void
 	 */
-	function notFound(ORequest $req): void {
+	public function notFound(ORequest $req): void {
 		OUrl::goToUrl('https://mcdesigner.osumi.es');
 	}
 }

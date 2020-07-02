@@ -13,7 +13,7 @@ class api extends OModule {
 	 *
 	 * @return void
 	 */
-	function login(ORequest $req): void {
+	public function login(ORequest $req): void {
 		$status = 'ok';
 		$email  = $req->getParamString('email');
 		$pass   = $req->getParamString('pass');
@@ -58,7 +58,7 @@ class api extends OModule {
 	 *
 	 * @return void
 	 */
-	function register(ORequest $req): void {
+	public function register(ORequest $req): void {
 		$status = 'ok';
 		$email  = $req->getParamString('email');
 		$pass   = $req->getParamString('pass');
@@ -101,7 +101,7 @@ class api extends OModule {
 	 *
 	 * @return void
 	 */
-	function updateProfile(ORequest $req): void {
+	public function updateProfile(ORequest $req): void {
 		$status    = 'ok';
 		$email     = $req->getParamString('email');
 		$old_pass  = $req->getParamString('oldPass');
@@ -145,7 +145,7 @@ class api extends OModule {
 	 *
 	 * @return void
 	 */
-	function loadDesigns(ORequest $req): void {
+	public function loadDesigns(ORequest $req): void {
 		$status = 'ok';
 		$list   = [];
 		$filter = $req->getFilter('loginFilter');
@@ -169,7 +169,7 @@ class api extends OModule {
 	 *
 	 * @return void
 	 */
-	function deleteDesign(ORequest $req): void {
+	public function deleteDesign(ORequest $req): void {
 		$status = 'ok';
 		$id     = $req->getParamInt('id');
 		$filter = $req->getFilter('loginFilter');
@@ -203,7 +203,7 @@ class api extends OModule {
 	 *
 	 * @return void
 	 */
-	function updateDesignSettings(ORequest $req): void {
+	public function updateDesignSettings(ORequest $req): void {
 		$status = 'ok';
 		$id     = $req->getParamInt('id');
 		$name   = $req->getParamString('name');
@@ -244,7 +244,7 @@ class api extends OModule {
 	 *
 	 * @return void
 	 */
-	function newDesign(ORequest $req): void {
+	public function newDesign(ORequest $req): void {
 		$status = 'ok';
 		$name   = $req->getParamString('name');
 		$size_x = $req->getParamInt('sizeX');
@@ -278,7 +278,7 @@ class api extends OModule {
 	 *
 	 * @return void
 	 */
-	function design(ORequest $req): void {
+	public function design(ORequest $req): void {
 		$status = 'ok';
 		$id     = $req->getParamInt('id');
 		$design = null;
@@ -313,7 +313,7 @@ class api extends OModule {
 	 *
 	 * @return void
 	 */
-	function updateDesign(ORequest $req): void {
+	public function updateDesign(ORequest $req): void {
 		$status = 'ok';
 		$id     = $req->getParamInt('id');
 		$name   = $req->getParamString('name');
@@ -361,7 +361,7 @@ class api extends OModule {
 	 *
 	 * @return void
 	 */
-	function newLevel(ORequest $req): void {
+	public function newLevel(ORequest $req): void {
 		$status    = 'ok';
 		$id_design = $req->getParamInt('idDesign');
 		$name      = $req->getParamString('name');
@@ -398,7 +398,7 @@ class api extends OModule {
 	 *
 	 * @return void
 	 */
-	function renameLevel(ORequest $req): void {
+	public function renameLevel(ORequest $req): void {
 		$status    = 'ok';
 		$id        = $req->getParamInt('id');
 		$id_design = $req->getParamInt('idDesign');
@@ -442,7 +442,7 @@ class api extends OModule {
 	 *
 	 * @return void
 	 */
-	function copyLevel(ORequest $req): void {
+	public function copyLevel(ORequest $req): void {
 		$status    = 'ok';
 		$id        = $req->getParamInt('id');
 		$filter    = $req->getFilter('loginFilter');
@@ -484,7 +484,7 @@ class api extends OModule {
 	 *
 	 * @return void
 	 */
-	function deleteLevel(ORequest $req): void {
+	public function deleteLevel(ORequest $req): void {
 		$status    = 'ok';
 		$id        = $req->getParamInt('id');
 		$filter    = $req->getFilter('loginFilter');
