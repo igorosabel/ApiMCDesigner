@@ -1,4 +1,8 @@
 <?php declare(strict_types=1);
+/**
+ * @prefix /api
+ * @type json
+*/
 class api extends OModule {
 	private ?webService $web_service = null;
 
@@ -9,8 +13,8 @@ class api extends OModule {
 	/**
 	 * Función para iniciar sesión en la aplicación
 	 *
+	 * @url /login
 	 * @param ORequest $req Request object with method, headers, parameters and filters used
-	 *
 	 * @return void
 	 */
 	public function login(ORequest $req): void {
@@ -54,8 +58,8 @@ class api extends OModule {
 	/**
 	 * Función para registrarse en la aplicación
 	 *
+	 * @url /register
 	 * @param ORequest $req Request object with method, headers, parameters and filters used
-	 *
 	 * @return void
 	 */
 	public function register(ORequest $req): void {
@@ -97,8 +101,9 @@ class api extends OModule {
 	/**
 	 * Función para actualizar los datos de un usuario
 	 *
+	 * @url /update-profile
+	 * @filter loginFilter
 	 * @param ORequest $req Request object with method, headers, parameters and filters used
-	 *
 	 * @return void
 	 */
 	public function updateProfile(ORequest $req): void {
@@ -141,8 +146,9 @@ class api extends OModule {
 	/**
 	 * Función para obtener la lista de diseños de un usuario
 	 *
+	 * @url /load-designs
+	 * @filter loginFilter
 	 * @param ORequest $req Request object with method, headers, parameters and filters used
-	 *
 	 * @return void
 	 */
 	public function loadDesigns(ORequest $req): void {
@@ -165,8 +171,9 @@ class api extends OModule {
 	/**
 	 * Función para borrar un diseño
 	 *
+	 * @url /delete-design
+	 * @filter loginFilter
 	 * @param ORequest $req Request object with method, headers, parameters and filters used
-	 *
 	 * @return void
 	 */
 	public function deleteDesign(ORequest $req): void {
@@ -199,8 +206,9 @@ class api extends OModule {
 	/**
 	 * Función para editar los detalles de un diseño
 	 *
+	 * @url /update-design-settings
+	 * @filter loginFilter
 	 * @param ORequest $req Request object with method, headers, parameters and filters used
-	 *
 	 * @return void
 	 */
 	public function updateDesignSettings(ORequest $req): void {
@@ -240,8 +248,9 @@ class api extends OModule {
 	/**
 	 * Función para crear un nuevo diseño
 	 *
+	 * @url /new-design
+	 * @filter loginFilter
 	 * @param ORequest $req Request object with method, headers, parameters and filters used
-	 *
 	 * @return void
 	 */
 	public function newDesign(ORequest $req): void {
@@ -274,8 +283,9 @@ class api extends OModule {
 	/**
 	 * Función para obtener los datos de un diseño
 	 *
+	 * @url /design
+	 * @filter loginFilter
 	 * @param ORequest $req Request object with method, headers, parameters and filters used
-	 *
 	 * @return void
 	 */
 	public function design(ORequest $req): void {
@@ -306,11 +316,12 @@ class api extends OModule {
 		$this->getTemplate()->addPartial('design', 'api/design', ['design'=>$design, 'extra'=>'nourlencode']);
 	}
 
-	/*
+	/**
 	 * Función para actualizar los datos de un diseño
 	 *
+	 * @url /update-design
+	 * @filter loginFilter
 	 * @param ORequest $req Request object with method, headers, parameters and filters used
-	 *
 	 * @return void
 	 */
 	public function updateDesign(ORequest $req): void {
@@ -357,8 +368,9 @@ class api extends OModule {
 	/**
 	 * Función para crear un nuevo nivel en un diseño
 	 *
+	 * @url /new-level
+	 * @filter loginFilter
 	 * @param ORequest $req Request object with method, headers, parameters and filters used
-	 *
 	 * @return void
 	 */
 	public function newLevel(ORequest $req): void {
@@ -394,8 +406,9 @@ class api extends OModule {
 	/**
 	 * Función para renombrar un nivel de un diseño
 	 *
+	 * @url /rename-level
+	 * @filter loginFilter
 	 * @param ORequest $req Request object with method, headers, parameters and filters used
-	 *
 	 * @return void
 	 */
 	public function renameLevel(ORequest $req): void {
@@ -438,8 +451,9 @@ class api extends OModule {
 	/**
 	 * Función para copiar un nivel de un diseño
 	 *
+	 * @url /copy-level
+	 * @filter loginFilter
 	 * @param ORequest $req Request object with method, headers, parameters and filters used
-	 *
 	 * @return void
 	 */
 	public function copyLevel(ORequest $req): void {
@@ -480,8 +494,9 @@ class api extends OModule {
 	/**
 	 * Función para borrar un nivel de un diseño
 	 *
+	 * @url /delete-level
+	 * @filter loginFilter
 	 * @param ORequest $req Request object with method, headers, parameters and filters used
-	 *
 	 * @return void
 	 */
 	public function deleteLevel(ORequest $req): void {
