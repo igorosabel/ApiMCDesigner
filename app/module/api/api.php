@@ -165,7 +165,7 @@ class api extends OModule {
 		}
 
 		$this->getTemplate()->add('status', $status);
-		$this->getTemplate()->addPartial('list', 'api/design_list', ['list'=>$list, 'extra'=>'nourlencode']);
+		$this->getTemplate()->addComponent('list', 'api/design_list', ['list'=>$list, 'extra'=>'nourlencode']);
 	}
 
 	/**
@@ -313,7 +313,7 @@ class api extends OModule {
 		}
 
 		$this->getTemplate()->add('status', $status);
-		$this->getTemplate()->addPartial('design', 'api/design', ['design'=>$design, 'extra'=>'nourlencode']);
+		$this->getTemplate()->addComponent('design', 'api/design', ['design'=>$design, 'extra'=>'nourlencode']);
 	}
 
 	/**
@@ -400,7 +400,7 @@ class api extends OModule {
 		}
 
 		$this->getTemplate()->add('status', $status);
-		$this->getTemplate()->addPartial('level', 'api/level', ['level' => $new_level, 'extra' => 'nourlencode']);
+		$this->getTemplate()->addComponent('level', 'api/level', ['level' => $new_level, 'extra' => 'nourlencode']);
 	}
 
 	/**
@@ -488,7 +488,7 @@ class api extends OModule {
 		}
 
 		$this->getTemplate()->add('status', $status);
-		$this->getTemplate()->addPartial('level', 'api/level', ['level' => $new_level, 'extra' => 'nourlencode']);
+		$this->getTemplate()->addComponent('level', 'api/level', ['level' => $new_level, 'extra' => 'nourlencode']);
 	}
 
 	/**
