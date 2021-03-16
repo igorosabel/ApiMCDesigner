@@ -1,4 +1,9 @@
 <?php declare(strict_types=1);
+
+namespace OsumiFramework\App\Model;
+
+use OsumiFramework\OFW\DB\OModel;
+
 class Note extends OModel {
 	/**
 	 * Configures current model object based on data-base table structure
@@ -7,40 +12,40 @@ class Note extends OModel {
 		$table_name  = 'note';
 		$model = [
 			'id' => [
-				'type'    => OCore::PK,
+				'type'    => OModel::PK,
 				'comment' => 'Clave única de cada nota'
 			],
 			'id_level' => [
-				'type'    => OCore::NUM,
+				'type'    => OModel::NUM,
 				'nullable' => false,
 				'default' => null,
 				'ref' => 'level.id',
 				'comment' => 'Id del nivel donde va la nota'
 			],
 			'pos_x' => [
-				'type'    => OCore::NUM,
+				'type'    => OModel::NUM,
 				'nullable' => false,
 				'default' => '1',
 				'comment' => 'Posición X de la nota'
 			],
 			'pos_y' => [
-				'type'    => OCore::NUM,
+				'type'    => OModel::NUM,
 				'nullable' => false,
 				'default' => '1',
 				'comment' => 'Posición Y de la nota'
 			],
 			'data' => [
-				'type'    => OCore::LONGTEXT,
+				'type'    => OModel::LONGTEXT,
 				'nullable' => true,
 				'default' => null,
 				'comment' => 'Contenido de la nota'
 			],
 			'created_at' => [
-				'type'    => OCore::CREATED,
+				'type'    => OModel::CREATED,
 				'comment' => 'Fecha de creación del registro'
 			],
 			'updated_at' => [
-				'type'    => OCore::UPDATED,
+				'type'    => OModel::UPDATED,
 				'nullable' => true,
 				'default' => null,
 				'comment' => 'Fecha de última modificación del registro'

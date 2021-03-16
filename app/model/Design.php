@@ -1,4 +1,9 @@
 <?php declare(strict_types=1);
+
+namespace OsumiFramework\App\Model;
+
+use OsumiFramework\OFW\DB\OModel;
+
 class Design extends OModel {
 	/**
 	 * Configures current model object based on data-base table structure
@@ -7,48 +12,48 @@ class Design extends OModel {
 		$table_name  = 'design';
 		$model = [
 			'id' => [
-				'type'    => OCore::PK,
+				'type'    => OModel::PK,
 				'comment' => 'Clave única de cada diseño'
 			],
 			'id_user' => [
-				'type'    => OCore::NUM,
+				'type'    => OModel::NUM,
 				'nullable' => false,
 				'default' => null,
 				'ref' => 'user.id',
 				'comment' => 'Id del usuario que hace el diseño'
 			],
 			'name' => [
-				'type'    => OCore::TEXT,
+				'type'    => OModel::TEXT,
 				'nullable' => false,
 				'default' => null,
 				'size' => 100,
 				'comment' => 'Nombre del diseño'
 			],
 			'slug' => [
-				'type'    => OCore::TEXT,
+				'type'    => OModel::TEXT,
 				'nullable' => false,
 				'default' => null,
 				'size' => 100,
 				'comment' => 'Slug del nombre del diseño'
 			],
 			'size_x' => [
-				'type'    => OCore::NUM,
+				'type'    => OModel::NUM,
 				'nullable' => false,
 				'default' => '0',
 				'comment' => 'Anchura del diseño'
 			],
 			'size_y' => [
-				'type'    => OCore::NUM,
+				'type'    => OModel::NUM,
 				'nullable' => false,
 				'default' => '0',
 				'comment' => 'Altura del diseño'
 			],
 			'created_at' => [
-				'type'    => OCore::CREATED,
+				'type'    => OModel::CREATED,
 				'comment' => 'Fecha de creación del registro'
 			],
 			'updated_at' => [
-				'type'    => OCore::UPDATED,
+				'type'    => OModel::UPDATED,
 				'nullable' => true,
 				'default' => null,
 				'comment' => 'Fecha de última modificación del registro'

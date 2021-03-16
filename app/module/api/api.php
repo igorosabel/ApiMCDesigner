@@ -1,8 +1,20 @@
 <?php declare(strict_types=1);
-/**
- * @prefix /api
- * @type json
-*/
+
+namespace OsumiFramework\App\Module;
+
+use OsumiFramework\OFW\Core\OModule;
+use OsumiFramework\OFW\Web\ORequest;
+use OsumiFramework\OFW\Routing\ORoute;
+use OsumiFramework\App\Model\Design;
+use OsumiFramework\App\Model\Level;
+use OsumiFramework\App\Model\User;
+use OsumiFramework\App\Service\webService;
+use OsumiFramework\OFW\Plugins\OToken;
+
+#[ORoute(
+	type: 'json',
+	prefix: '/api'
+)]
 class api extends OModule {
 	private ?webService $web_service = null;
 
@@ -13,10 +25,10 @@ class api extends OModule {
 	/**
 	 * Función para iniciar sesión en la aplicación
 	 *
-	 * @url /login
 	 * @param ORequest $req Request object with method, headers, parameters and filters used
 	 * @return void
 	 */
+	#[ORoute('/login')]
 	public function login(ORequest $req): void {
 		$status = 'ok';
 		$email  = $req->getParamString('email');
@@ -38,7 +50,7 @@ class api extends OModule {
 					$tk = new OToken($this->getConfig()->getExtra('secret'));
 					$tk->addParam('id',   $id);
 					$tk->addParam('email', $email);
-					$tk->addParam('exp', mktime() + (24 * 60 * 60));
+					$tk->addParam('exp', time() + (24 * 60 * 60));
 					$token = $tk->getToken();
 				}
 				else {
@@ -58,10 +70,10 @@ class api extends OModule {
 	/**
 	 * Función para registrarse en la aplicación
 	 *
-	 * @url /register
 	 * @param ORequest $req Request object with method, headers, parameters and filters used
 	 * @return void
 	 */
+	#[ORoute('/register')]
 	public function register(ORequest $req): void {
 		$status = 'ok';
 		$email  = $req->getParamString('email');
@@ -88,7 +100,7 @@ class api extends OModule {
 				$tk = new OToken($this->getConfig()->getExtra('secret'));
 				$tk->addParam('id',   $id);
 				$tk->addParam('email', $email);
-				$tk->addParam('exp', mktime() + (24 * 60 * 60));
+				$tk->addParam('exp', time() + (24 * 60 * 60));
 				$token = $tk->getToken();
 			}
 		}
@@ -101,11 +113,13 @@ class api extends OModule {
 	/**
 	 * Función para actualizar los datos de un usuario
 	 *
-	 * @url /update-profile
-	 * @filter loginFilter
 	 * @param ORequest $req Request object with method, headers, parameters and filters used
 	 * @return void
 	 */
+	#[ORoute(
+		'/update-profile',
+		filter: 'loginFilter'
+	)]
 	public function updateProfile(ORequest $req): void {
 		$status    = 'ok';
 		$email     = $req->getParamString('email');
@@ -146,11 +160,13 @@ class api extends OModule {
 	/**
 	 * Función para obtener la lista de diseños de un usuario
 	 *
-	 * @url /load-designs
-	 * @filter loginFilter
 	 * @param ORequest $req Request object with method, headers, parameters and filters used
 	 * @return void
 	 */
+	#[ORoute(
+		'/load-designs',
+		filter: 'loginFilter'
+	)]
 	public function loadDesigns(ORequest $req): void {
 		$status = 'ok';
 		$list   = [];
@@ -171,11 +187,13 @@ class api extends OModule {
 	/**
 	 * Función para borrar un diseño
 	 *
-	 * @url /delete-design
-	 * @filter loginFilter
 	 * @param ORequest $req Request object with method, headers, parameters and filters used
 	 * @return void
 	 */
+	#[ORoute(
+		'/delete-design',
+		filter: 'loginFilter'
+	)]
 	public function deleteDesign(ORequest $req): void {
 		$status = 'ok';
 		$id     = $req->getParamInt('id');
@@ -206,11 +224,13 @@ class api extends OModule {
 	/**
 	 * Función para editar los detalles de un diseño
 	 *
-	 * @url /update-design-settings
-	 * @filter loginFilter
 	 * @param ORequest $req Request object with method, headers, parameters and filters used
 	 * @return void
 	 */
+	#[ORoute(
+		'/update-design-settings',
+		filter: 'loginFilter'
+	)]
 	public function updateDesignSettings(ORequest $req): void {
 		$status = 'ok';
 		$id     = $req->getParamInt('id');
@@ -248,11 +268,13 @@ class api extends OModule {
 	/**
 	 * Función para crear un nuevo diseño
 	 *
-	 * @url /new-design
-	 * @filter loginFilter
 	 * @param ORequest $req Request object with method, headers, parameters and filters used
 	 * @return void
 	 */
+	#[ORoute(
+		'/new-design',
+		filter: 'loginFilter'
+	)]
 	public function newDesign(ORequest $req): void {
 		$status = 'ok';
 		$name   = $req->getParamString('name');
@@ -283,11 +305,13 @@ class api extends OModule {
 	/**
 	 * Función para obtener los datos de un diseño
 	 *
-	 * @url /design
-	 * @filter loginFilter
 	 * @param ORequest $req Request object with method, headers, parameters and filters used
 	 * @return void
 	 */
+	#[ORoute(
+		'/design',
+		filter: 'loginFilter'
+	)]
 	public function design(ORequest $req): void {
 		$status = 'ok';
 		$id     = $req->getParamInt('id');
@@ -319,11 +343,13 @@ class api extends OModule {
 	/**
 	 * Función para actualizar los datos de un diseño
 	 *
-	 * @url /update-design
-	 * @filter loginFilter
 	 * @param ORequest $req Request object with method, headers, parameters and filters used
 	 * @return void
 	 */
+	#[ORoute(
+		'/update-design',
+		filter: 'loginFilter'
+	)]
 	public function updateDesign(ORequest $req): void {
 		$status = 'ok';
 		$id     = $req->getParamInt('id');
@@ -368,11 +394,13 @@ class api extends OModule {
 	/**
 	 * Función para crear un nuevo nivel en un diseño
 	 *
-	 * @url /new-level
-	 * @filter loginFilter
 	 * @param ORequest $req Request object with method, headers, parameters and filters used
 	 * @return void
 	 */
+	#[ORoute(
+		'/new-level',
+		filter: 'loginFilter'
+	)]
 	public function newLevel(ORequest $req): void {
 		$status    = 'ok';
 		$id_design = $req->getParamInt('idDesign');
@@ -406,11 +434,13 @@ class api extends OModule {
 	/**
 	 * Función para renombrar un nivel de un diseño
 	 *
-	 * @url /rename-level
-	 * @filter loginFilter
 	 * @param ORequest $req Request object with method, headers, parameters and filters used
 	 * @return void
 	 */
+	#[ORoute(
+		'/rename-level',
+		filter: 'loginFilter'
+	)]
 	public function renameLevel(ORequest $req): void {
 		$status    = 'ok';
 		$id        = $req->getParamInt('id');
@@ -451,11 +481,13 @@ class api extends OModule {
 	/**
 	 * Función para copiar un nivel de un diseño
 	 *
-	 * @url /copy-level
-	 * @filter loginFilter
 	 * @param ORequest $req Request object with method, headers, parameters and filters used
 	 * @return void
 	 */
+	#[ORoute(
+		'/copy-level',
+		filter: 'loginFilter'
+	)]
 	public function copyLevel(ORequest $req): void {
 		$status    = 'ok';
 		$id        = $req->getParamInt('id');
@@ -494,11 +526,13 @@ class api extends OModule {
 	/**
 	 * Función para borrar un nivel de un diseño
 	 *
-	 * @url /delete-level
-	 * @filter loginFilter
 	 * @param ORequest $req Request object with method, headers, parameters and filters used
 	 * @return void
 	 */
+	#[ORoute(
+		'/delete-level',
+		filter: 'loginFilter'
+	)]
 	public function deleteLevel(ORequest $req): void {
 		$status    = 'ok';
 		$id        = $req->getParamInt('id');
