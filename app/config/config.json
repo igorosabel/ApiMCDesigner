@@ -1,4 +1,5 @@
 {
+	"name": "MC Designer",
 	"db": {
 		"host": "localhost",
 		"user": "mcdesigner",
@@ -7,7 +8,7 @@
 	},
 	"base_url": "https://apimcdesigner.osumi.es",
 	"lang": "es",
-	"log_level": "DEBUG",
+	"log_level": "ERROR",
 	"extra": {
 		"secret": "6fcad1ad0179a42c8f1146c0716ef7d78adc7576"
 	}
