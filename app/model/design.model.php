@@ -5,11 +5,7 @@ namespace OsumiFramework\App\Model;
 use OsumiFramework\OFW\DB\OModel;
 
 class Design extends OModel {
-	/**
-	 * Configures current model object based on data-base table structure
-	 */
 	function __construct() {
-		$table_name  = 'design';
 		$model = [
 			'id' => [
 				'type'    => OModel::PK,
@@ -60,7 +56,7 @@ class Design extends OModel {
 			]
 		];
 
-		parent::load($table_name, $model);
+		parent::load($model);
 	}
 
 	private ?array $levels = null;
