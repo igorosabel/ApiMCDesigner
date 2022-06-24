@@ -10,7 +10,7 @@ use OsumiFramework\App\Model\Level;
 
 #[OModuleAction(
 	url: '/delete-level',
-	filter: 'login'
+	filters: ['login']
 )]
 class deleteLevelAction extends OAction {
 	/**

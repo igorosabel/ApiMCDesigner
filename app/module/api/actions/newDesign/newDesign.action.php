@@ -10,7 +10,7 @@ use OsumiFramework\App\Model\Design;
 
 #[OModuleAction(
 	url: '/new-design',
-	filter: 'login',
+	filters: ['login'],
 	services: ['web']
 )]
 class newDesignAction extends OAction {

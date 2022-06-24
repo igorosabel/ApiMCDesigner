@@ -9,7 +9,7 @@ use OsumiFramework\App\Component\DesignListComponent;
 
 #[OModuleAction(
 	url: '/load-designs',
-	filter: 'login',
+	filters: ['login'],
 	services: ['web'],
 	components: ['api/design_list']
 )]

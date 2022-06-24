@@ -10,7 +10,7 @@ use OsumiFramework\App\Component\LevelComponent;
 
 #[OModuleAction(
 	url: '/new-level',
-	filter: 'login',
+	filters: ['login'],
 	services: ['web'],
 	components: ['api/level']
 )]

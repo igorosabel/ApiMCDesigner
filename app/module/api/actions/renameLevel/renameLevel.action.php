@@ -10,7 +10,7 @@ use OsumiFramework\App\Model\Level;
 
 #[OModuleAction(
 	url: '/rename-level',
-	filter: 'login'
+	filters: ['login']
 )]
 class renameLevelAction extends OAction {
 	/**

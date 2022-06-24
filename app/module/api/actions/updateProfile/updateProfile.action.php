@@ -9,7 +9,7 @@ use OsumiFramework\App\Model\User;
 
 #[OModuleAction(
 	url: '/update-profile',
-	filter: 'login'
+	filters: ['login']
 )]
 class updateProfileAction extends OAction {
 	/**
