@@ -6,12 +6,11 @@ use OsumiFramework\OFW\Routing\OModuleAction;
 use OsumiFramework\OFW\Routing\OAction;
 use OsumiFramework\OFW\Web\ORequest;
 use OsumiFramework\App\Model\Design;
-use OsumiFramework\App\Component\DesignComponent;
+use OsumiFramework\App\Component\Api\DesignComponent;
 
 #[OModuleAction(
 	url: '/design',
-	filters: ['login'],
-	components: ['api/design']
+	filters: ['login']
 )]
 class designAction extends OAction {
 	/**

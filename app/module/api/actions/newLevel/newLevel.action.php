@@ -6,13 +6,12 @@ use OsumiFramework\OFW\Routing\OModuleAction;
 use OsumiFramework\OFW\Routing\OAction;
 use OsumiFramework\OFW\Web\ORequest;
 use OsumiFramework\App\Model\Design;
-use OsumiFramework\App\Component\LevelComponent;
+use OsumiFramework\App\Component\Api\LevelComponent;
 
 #[OModuleAction(
 	url: '/new-level',
 	filters: ['login'],
-	services: ['web'],
-	components: ['api/level']
+	services: ['web']
 )]
 class newLevelAction extends OAction {
 	/**

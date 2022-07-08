@@ -7,13 +7,12 @@ use OsumiFramework\OFW\Routing\OAction;
 use OsumiFramework\OFW\Web\ORequest;
 use OsumiFramework\App\Model\Design;
 use OsumiFramework\App\Model\Level;
-use OsumiFramework\App\Component\LevelComponent;
+use OsumiFramework\App\Component\Api\LevelComponent;
 
 #[OModuleAction(
 	url: '/copy-level',
 	filters: ['login'],
-	services: ['web'],
-	components: ['api/level']
+	services: ['web']
 )]
 class copyLevelAction extends OAction {
 	/**

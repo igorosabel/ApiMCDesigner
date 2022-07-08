@@ -5,13 +5,12 @@ namespace OsumiFramework\App\Module\Action;
 use OsumiFramework\OFW\Routing\OModuleAction;
 use OsumiFramework\OFW\Routing\OAction;
 use OsumiFramework\OFW\Web\ORequest;
-use OsumiFramework\App\Component\DesignListComponent;
+use OsumiFramework\App\Component\Api\DesignListComponent;
 
 #[OModuleAction(
 	url: '/load-designs',
 	filters: ['login'],
-	services: ['web'],
-	components: ['api/design_list']
+	services: ['web']
 )]
 class loadDesignsAction extends OAction {
 	/**
