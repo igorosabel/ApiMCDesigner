@@ -3,58 +3,68 @@
 namespace OsumiFramework\App\Model;
 
 use OsumiFramework\OFW\DB\OModel;
+use OsumiFramework\OFW\DB\OModelGroup;
+use OsumiFramework\OFW\DB\OModelField;
 
 class Design extends OModel {
 	function __construct() {
-		$model = [
-			'id' => [
-				'type'    => OModel::PK,
-				'comment' => 'Clave única de cada diseño'
-			],
-			'id_user' => [
-				'type'    => OModel::NUM,
-				'nullable' => false,
-				'default' => null,
-				'ref' => 'user.id',
-				'comment' => 'Id del usuario que hace el diseño'
-			],
-			'name' => [
-				'type'    => OModel::TEXT,
-				'nullable' => false,
-				'default' => null,
-				'size' => 100,
-				'comment' => 'Nombre del diseño'
-			],
-			'slug' => [
-				'type'    => OModel::TEXT,
-				'nullable' => false,
-				'default' => null,
-				'size' => 100,
-				'comment' => 'Slug del nombre del diseño'
-			],
-			'size_x' => [
-				'type'    => OModel::NUM,
-				'nullable' => false,
-				'default' => '0',
-				'comment' => 'Anchura del diseño'
-			],
-			'size_y' => [
-				'type'    => OModel::NUM,
-				'nullable' => false,
-				'default' => '0',
-				'comment' => 'Altura del diseño'
-			],
-			'created_at' => [
-				'type'    => OModel::CREATED,
-				'comment' => 'Fecha de creación del registro'
-			],
-			'updated_at' => [
-				'type'    => OModel::UPDATED,
-				'nullable' => true,
-				'default' => null,
-				'comment' => 'Fecha de última modificación del registro'
-			]
-		];
+		$model = new OModelGroup(
+			new OModelField(
+				name: 'id',
+				type: OMODEL_PK,
+				comment: 'Clave única de cada diseño'
+			),
+			new OModelField(
+				name: 'id_user',
+				type: OMODEL_NUM,
+				nullable: false,
+				default: null,
+				ref: 'user.id',
+				comment: 'Id del usuario que hace el diseño'
+			),
+			new OModelField(
+				name: 'name',
+				type: OMODEL_TEXT,
+				nullable: false,
+				default: 'null',
+				size: 100,
+				comment: 'Nombre del diseño'
+			),
+			new OModelField(
+				name: 'slug',
+				type: OMODEL_TEXT,
+				nullable: false,
+				default: 'null',
+				size: 100,
+				comment: 'Slug del nombre del diseño'
+			),
+			new OModelField(
+				name: 'size_x',
+				type: OMODEL_NUM,
+				nullable: false,
+				default: 0,
+				comment: 'Anchura del diseño'
+			),
+			new OModelField(
+				name: 'size_y',
+				type: OMODEL_NUM,
+				nullable: false,
+				default: 0,
+				comment: 'Altura del diseño'
+			),
+			new OModelField(
+				name: 'created_at',
+				type: OMODEL_CREATED,
+				comment: 'Fecha de creación del registro'
+			),
+			new OModelField(
+				name: 'updated_at',
+				type: OMODEL_UPDATED,
+				nullable: true,
+				default: null,
+				comment: 'Fecha de última modificación del registro'
+			)
+		);
 
 		parent::load($model);
 	}
