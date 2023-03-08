@@ -5,6 +5,7 @@ namespace OsumiFramework\App\Module\Action;
 use OsumiFramework\OFW\Routing\OModuleAction;
 use OsumiFramework\OFW\Routing\OAction;
 use OsumiFramework\OFW\Web\ORequest;
+use OsumiFramework\OFW\Tools\OTools;
 use OsumiFramework\App\Model\Design;
 
 #[OModuleAction(
@@ -35,7 +36,8 @@ class updateDesignSettingsAction extends OAction {
 			$design = new Design();
 			if ($design->find(['id' => $id])) {
 				if ($design->get('id_user') == $filter['id']) {
-					$design->set('name', $name);
+					$design->set('name', urldecode($name));
+					$design->set('slug', OTools::slugify(urldecode($name)));
 					$design->save();
 					if ($size_x != $design->get('size_x') || $size_y != $design->sizeY) {
 						$this->web_service->updateDesignSize($design, $size_x, $size_y);

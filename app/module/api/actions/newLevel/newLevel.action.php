@@ -35,7 +35,7 @@ class newLevelAction extends OAction {
 			$design = new Design();
 			if ($design->find(['id' => $id_design])){
 				if ($design->get('id_user') == $filter['id']){
-					$level_component->setValue('level', $this->web_service->createNewLevel($design, $name));
+					$level_component->setValue('level', $this->web_service->createNewLevel($design, urldecode($name)));
 				}
 				else {
 					$status = 'error';

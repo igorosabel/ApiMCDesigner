@@ -34,8 +34,8 @@ class newDesignAction extends OAction {
 		if ($status=='ok') {
 			$design = new Design();
 			$design->set('id_user', $filter['id']);
-			$design->set('name',    $name);
-			$design->set('slug',    OTools::slugify($name));
+			$design->set('name',    urldecode($name));
+			$design->set('slug',    OTools::slugify(urldecode($name)));
 			$design->set('size_x',  $size_x);
 			$design->set('size_y',  $size_y);
 

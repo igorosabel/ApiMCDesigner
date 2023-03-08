@@ -73,7 +73,7 @@ class webService extends OService {
 				}
 				else {
 					// Si faltan columnas por añadir, las añado con valor 0
-					for ($j=0; $j<($size_x-count($data[i])); $j++) {
+					for ($j=0; $j<($size_x-count($data[$i])); $j++) {
 						array_push($data[$i], 0);
 					}
 				}
@@ -152,7 +152,7 @@ class webService extends OService {
 		foreach ($levels as $level) {
 			$lev = new Level();
 			if ($lev->find(['id'=>$level['id']])) {
-				$lev->set('name', $level['name']);
+				$lev->set('name', urldecode($level['name']));
 				$lev->set('height', $level['height']);
 				$lev->set('data', json_encode($level['data']));
 				$lev->save();
