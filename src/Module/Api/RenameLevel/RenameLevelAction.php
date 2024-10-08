@@ -26,10 +26,10 @@ class RenameLevelAction extends OAction {
 			$this->status = 'error';
 		}
 
-		if ($this->status == 'ok') {
+		if ($this->status === 'ok') {
 			$design = new Design();
 			if ($design->find(['id' => $id_design])) {
-				if ($design->get('id_user') == $filter['id']) {
+				if ($design->get('id_user') === $filter['id']) {
 					$level = new Level();
 					if ($level->find(['id' => $id])) {
 						$level->set('name', $name);

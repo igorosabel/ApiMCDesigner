@@ -26,12 +26,12 @@ class UpdateProfileAction extends OAction {
 			$this->status = 'error';
 		}
 
-		if ($this->status=='ok') {
+		if ($this->status === 'ok') {
 			$u = new User();
 			if ($u->find(['id' => $filter['id']])) {
 				$u->set('email', $email);
 
-				if ($old_pass != '' && $new_pass != '' && $conf_pass != '' && $new_pass == $conf_pass) {
+				if ($old_pass !== '' && $new_pass !== '' && $conf_pass !== '' && $new_pass === $conf_pass) {
 					if (password_verify($old_pass, $u->get('pass'))) {
 						$u->set('pass', password_hash($new_pass, PASSWORD_BCRYPT));
 					}
@@ -40,7 +40,7 @@ class UpdateProfileAction extends OAction {
 					}
 				}
 
-				if ($this->status=='ok') {
+				if ($this->status === 'ok') {
 					$u->save();
 				}
 			}

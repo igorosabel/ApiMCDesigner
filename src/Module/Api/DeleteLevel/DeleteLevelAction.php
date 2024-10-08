@@ -7,10 +7,6 @@ use Osumi\OsumiFramework\Web\ORequest;
 use Osumi\OsumiFramework\App\Model\Design;
 use Osumi\OsumiFramework\App\Model\Level;
 
-#[OModuleAction(
-	url: '/delete-level',
-	filters: ['login']
-)]
 class DeleteLevelAction extends OAction {
   public string $status = 'ok';
 
@@ -28,12 +24,12 @@ class DeleteLevelAction extends OAction {
 			$this->status = 'error';
 		}
 
-		if ($this->status=='ok') {
+		if ($this->status === 'ok') {
 			$level = new Level();
 			if ($level->find(['id' => $id])){
 				$design = new Design();
 				if ($design->find(['id' => $level->get('id_design')])) {
-					if ($design->get('id_user') == $filter['id']){
+					if ($design->get('id_user') === $filter['id']){
 						$level->delete();
 					}
 					else {

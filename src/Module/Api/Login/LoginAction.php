@@ -7,9 +7,6 @@ use Osumi\OsumiFramework\Web\ORequest;
 use Osumi\OsumiFramework\Plugins\OToken;
 use Osumi\OsumiFramework\App\Model\User;
 
-#[OModuleAction(
-	url: '/login'
-)]
 class LoginAction extends OAction {
   public string       $status = 'ok';
   public string | int $id     = 'null';
@@ -29,9 +26,9 @@ class LoginAction extends OAction {
 			$this->status = 'error';
 		}
 
-		if ($this->status=='ok') {
+		if ($this->status === 'ok') {
 			$u = new User();
-			if ($u->find(['email'=>$email])) {
+			if ($u->find(['email' => $email])) {
 				if (password_verify($pass, $u->get('pass'))) {
 					$this->id = $u->get('id');
 

@@ -26,7 +26,7 @@ class RegisterAction extends OAction {
 			$this->status = 'error';
 		}
 
-		if ($this->status == 'ok') {
+		if ($this->status === 'ok') {
 			$u = new User();
 			if ($u->find(['email' => $email])) {
 				$this->status = 'error-user';

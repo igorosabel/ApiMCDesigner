@@ -23,10 +23,10 @@ class DeleteDesignAction extends OAction {
 			$this->status = 'error';
 		}
 
-		if ($this->status=='ok') {
+		if ($this->status === 'ok') {
 			$design = new Design();
 			if ($design->find(['id' => $id])) {
-				if ($design->get('id_user') == $filter['id']) {
+				if ($design->get('id_user') === $filter['id']) {
 					$design->deleteFull();
 				}
 				else {

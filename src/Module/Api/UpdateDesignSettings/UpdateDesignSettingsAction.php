@@ -5,10 +5,17 @@ namespace Osumi\OsumiFramework\App\Module\Api\UpdateDesignSettings;
 use Osumi\OsumiFramework\Routing\OAction;
 use Osumi\OsumiFramework\Web\ORequest;
 use Osumi\OsumiFramework\Tools\OTools;
+use Osumi\OsumiFramework\App\Service\WebService;
 use Osumi\OsumiFramework\App\Model\Design;
 
 class UpdateDesignSettingsAction extends OAction {
+  private ?WebService $ws = null;
+
   public string $status = 'ok';
+
+  public function __construct() {
+    $this->ws = inject(WebService::class);
+  }
 
 	/**
 	 * Función para editar los detalles de un diseño
@@ -27,16 +34,16 @@ class UpdateDesignSettingsAction extends OAction {
 			$this->status = 'error';
 		}
 
-		if ($this->status=='ok') {
+		if ($this->status === 'ok') {
 			$design = new Design();
 			if ($design->find(['id' => $id])) {
-				if ($design->get('id_user') == $filter['id']) {
+				if ($design->get('id_user') === $filter['id']) {
 					$design->set('name', urldecode($name));
 					$design->set('slug', OTools::slugify(urldecode($name)));
 					$design->save();
 
-					if ($size_x != $design->get('size_x') || $size_y != $design->sizeY) {
-						$this->service['Web']->updateDesignSize($design, $size_x, $size_y);
+					if ($size_x !== $design->get('size_x') || $size_y !== $design->sizeY) {
+						$this->ws->updateDesignSize($design, $size_x, $size_y);
 					}
 				}
 				else {

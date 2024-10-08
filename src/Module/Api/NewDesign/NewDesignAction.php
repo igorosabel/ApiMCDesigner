@@ -5,10 +5,17 @@ namespace Osumi\OsumiFramework\App\Module\Api\NewDesign;
 use Osumi\OsumiFramework\Routing\OAction;
 use Osumi\OsumiFramework\Web\ORequest;
 use Osumi\OsumiFramework\Tools\OTools;
+use Osumi\OsumiFramework\App\Service\WebService;
 use Osumi\OsumiFramework\App\Model\Design;
 
 class NewDesignAction extends OAction {
+  private ?WebService $ws = null;
+
   public string $status = 'ok';
+
+  public function __construct() {
+    $this->ws = inject(WebService::class);
+  }
 
 	/**
 	 * Función para crear un nuevo diseño
@@ -26,7 +33,7 @@ class NewDesignAction extends OAction {
 			$this->status = 'error';
 		}
 
-		if ($this->status=='ok') {
+		if ($this->status === 'ok') {
 			$design = new Design();
 			$design->set('id_user', $filter['id']);
 			$design->set('name',    urldecode($name));
@@ -36,7 +43,7 @@ class NewDesignAction extends OAction {
 
 			$design->save();
 
-			$this->service['Web']->createNewLevel($design);
+			$this->ws->createNewLevel($design);
 		}
 	}
 }
