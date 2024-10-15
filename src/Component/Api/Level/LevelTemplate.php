@@ -1,10 +1,10 @@
-<?php if (is_null($values['Level'])): ?>
+<?php if (is_null($level)): ?>
 	null
 <?php else: ?>
 	{
-		"id": <?php echo $values['Level']->get('id') ?>,
-		"name": "<?php echo urlencode($values['Level']->get('name')) ?>",
-		"height": <?php echo $values['Level']->get('height') ?>,
-		"data": <?php echo $values['Level']->get('data') ?>
+		"id": <?php echo $level->get('id') ?>,
+		"name": "<?php echo urlencode($level->get('name')) ?>",
+		"height": <?php echo $level->get('height') ?>,
+		"data": <?php echo $level->get('data') ?>
 	}
 <?php endif ?>

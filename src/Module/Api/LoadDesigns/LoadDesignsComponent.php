@@ -2,20 +2,21 @@
 
 namespace Osumi\OsumiFramework\App\Module\Api\LoadDesigns;
 
-use Osumi\OsumiFramework\Routing\OAction;
+use Osumi\OsumiFramework\Core\OComponent;
 use Osumi\OsumiFramework\Web\ORequest;
 use Osumi\OsumiFramework\App\Service\WebService;
 use Osumi\OsumiFramework\App\Component\Api\DesignList\DesignListComponent;
 
-class LoadDesignsAction extends OAction {
+class LoadDesignsComponent extends OComponent {
   private ?WebService $ws = null;
 
   public string $status = 'ok';
   public ?DesignListComponent $list = null;
 
   public function __construct() {
+    parent::__construct();
     $this->ws = inject(WebService::class);
-    $this->list = new DesignListComponent(['list' => []]);
+    $this->list = new DesignListComponent();
   }
 
 	/**
@@ -32,7 +33,7 @@ class LoadDesignsAction extends OAction {
 		}
 
 		if ($this->status === 'ok') {
-			$this->list->setValue('list', $this->ws->getDesignList($filter['id']));
+			$this->list->list = $this->ws->getDesignList($filter['id']);
 		}
 	}
 }

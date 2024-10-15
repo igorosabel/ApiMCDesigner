@@ -2,11 +2,11 @@
 
 namespace Osumi\OsumiFramework\App\Module\Api\UpdateProfile;
 
-use Osumi\OsumiFramework\Routing\OAction;
+use Osumi\OsumiFramework\Core\OComponent;
 use Osumi\OsumiFramework\Web\ORequest;
 use Osumi\OsumiFramework\App\Model\User;
 
-class UpdateProfileAction extends OAction {
+class UpdateProfileComponent extends OComponent {
   public string $status = 'ok';
 
 	/**

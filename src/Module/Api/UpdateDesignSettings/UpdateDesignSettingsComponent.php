@@ -1,24 +1,25 @@
 <?php declare(strict_types=1);
 
-namespace Osumi\OsumiFramework\App\Module\Api\UpdateDesign;
+namespace Osumi\OsumiFramework\App\Module\Api\UpdateDesignSettings;
 
-use Osumi\OsumiFramework\Routing\OAction;
+use Osumi\OsumiFramework\Core\OComponent;
 use Osumi\OsumiFramework\Web\ORequest;
 use Osumi\OsumiFramework\Tools\OTools;
 use Osumi\OsumiFramework\App\Service\WebService;
 use Osumi\OsumiFramework\App\Model\Design;
 
-class UpdateDesignAction extends OAction {
+class UpdateDesignSettingsComponent extends OComponent {
   private ?WebService $ws = null;
 
   public string $status = 'ok';
 
   public function __construct() {
+    parent::__construct();
     $this->ws = inject(WebService::class);
   }
 
 	/**
-	 * Función para actualizar los datos de un diseño
+	 * Función para editar los detalles de un diseño
 	 *
 	 * @param ORequest $req Request object with method, headers, parameters and filters used
 	 * @return void
@@ -28,10 +29,9 @@ class UpdateDesignAction extends OAction {
 		$name   = $req->getParamString('name');
 		$size_x = $req->getParamInt('sizeX');
 		$size_y = $req->getParamInt('sizeY');
-		$levels = $req->getParam('levels');
 		$filter = $req->getFilter('Login');
 
-		if (is_null($id) || is_null($name) || is_null($size_x) || is_null($size_y) || is_null($levels) || is_null($filter) || !array_key_exists('id', $filter)) {
+		if (is_null($id) || is_null($name) || is_null($size_x) || is_null($size_y) || is_null($filter) || !array_key_exists('id', $filter)) {
 			$this->status = 'error';
 		}
 
@@ -41,14 +41,10 @@ class UpdateDesignAction extends OAction {
 				if ($design->get('id_user') === $filter['id']) {
 					$design->set('name', urldecode($name));
 					$design->set('slug', OTools::slugify(urldecode($name)));
-					$design->set('size_x', $size_x);
-					$design->set('size_y', $size_y);
-
 					$design->save();
 
-					$updatedLevels = $this->ws->updateLevels($levels);
-					if (!$updatedLevels) {
-						$this->status = 'error';
+					if ($size_x !== $design->get('size_x') || $size_y !== $design->sizeY) {
+						$this->ws->updateDesignSize($design, $size_x, $size_y);
 					}
 				}
 				else {

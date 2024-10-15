@@ -1,21 +1,20 @@
-<?php if (is_null($values['Design'])): ?>
+<?php if (is_null($design)): ?>
 null
 <?php else: ?>
-<?php $des = $values['Design']; ?>
 {
-	"id": <?php echo $des->get('id') ?>,
-	"name": "<?php echo urlencode($des->get('name')) ?>",
-	"slug": "<?php echo $des->get('slug') ?>",
-	"sizeX": <?php echo $des->get('size_x') ?>,
-	"sizeY": <?php echo $des->get('size_y') ?>,
+	"id": <?php echo $design->get('id') ?>,
+	"name": "<?php echo urlencode($design->get('name')) ?>",
+	"slug": "<?php echo $design->get('slug') ?>",
+	"sizeX": <?php echo $design->get('size_x') ?>,
+	"sizeY": <?php echo $design->get('size_y') ?>,
 	"levels": [
-<?php foreach ($des->getLevels() as $i => $level): ?>
+<?php foreach ($design->getLevels() as $i => $level): ?>
 		{
 			"id": <?php echo $level->get('id') ?>,
 			"name": "<?php echo urlencode($level->get('name')) ?>",
 			"height": <?php echo $level->get('height') ?>,
 			"data": <?php echo $level->get('data') ?>
-		}<?php if ($i<count($des->getLevels())-1): ?>,<?php endif ?>
+		}<?php if ($i < count($design->getLevels()) - 1): ?>,<?php endif ?>
 <?php endforeach ?>
 	]
 }

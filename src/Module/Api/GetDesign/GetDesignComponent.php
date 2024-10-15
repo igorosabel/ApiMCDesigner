@@ -1,18 +1,19 @@
 <?php declare(strict_types=1);
 
-namespace Osumi\OsumiFramework\App\Module\Api\Design;
+namespace Osumi\OsumiFramework\App\Module\Api\GetDesign;
 
-use Osumi\OsumiFramework\Routing\OAction;
+use Osumi\OsumiFramework\Core\OComponent;
 use Osumi\OsumiFramework\Web\ORequest;
 use Osumi\OsumiFramework\App\Model\Design;
 use Osumi\OsumiFramework\App\Component\Api\Design\DesignComponent;
 
-class DesignAction extends OAction {
+class GetDesignComponent extends OComponent {
   public string $status = 'ok';
   public ?DesignComponent $design = null;
 
   public function __construct() {
-    $this->design = new DesignComponent(['Design' => null]);
+    parent::__construct();
+    $this->design = new DesignComponent();
   }
 
 	/**
@@ -33,7 +34,7 @@ class DesignAction extends OAction {
 			$d = new Design();
 			if ($d->find(['id' => $id])) {
 				if ($d->get('id_user') === $filter['id']) {
-					$this->design->setValue('Design', $d);
+					$this->design->design = $d;
 				}
 				else {
 					$this->status = 'error';

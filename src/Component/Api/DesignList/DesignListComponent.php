@@ -4,4 +4,6 @@ namespace Osumi\OsumiFramework\App\Component\Api\DesignList;
 
 use Osumi\OsumiFramework\Core\OComponent;
 
-class DesignListComponent extends OComponent {}
+class DesignListComponent extends OComponent {
+  public array $list = [];
+}

@@ -2,12 +2,12 @@
 
 namespace Osumi\OsumiFramework\App\Module\Api\Register;
 
-use Osumi\OsumiFramework\Routing\OAction;
+use Osumi\OsumiFramework\Core\OComponent;
 use Osumi\OsumiFramework\Web\ORequest;
 use Osumi\OsumiFramework\Plugins\OToken;
 use Osumi\OsumiFramework\App\Model\User;
 
-class RegisterAction extends OAction {
+class RegisterComponent extends OComponent {
   public string       $status = 'ok';
   public string | int $id     = 'null';
   public string       $token  = '';

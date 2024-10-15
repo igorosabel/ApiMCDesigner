@@ -2,21 +2,22 @@
 
 namespace Osumi\OsumiFramework\App\Module\Api\NewLevel;
 
-use Osumi\OsumiFramework\Routing\OAction;
+use Osumi\OsumiFramework\Core\OComponent;
 use Osumi\OsumiFramework\Web\ORequest;
 use Osumi\OsumiFramework\App\Service\WebService;
 use Osumi\OsumiFramework\App\Model\Design;
 use Osumi\OsumiFramework\App\Component\Api\Level\LevelComponent;
 
-class NewLevelAction extends OAction {
+class NewLevelComponent extends OComponent {
   private ?WebService $ws = null;
 
   public string $status = 'ok';
   public ?LevelComponent $level = null;
 
   public function __construct() {
+    parent::__construct();
     $this->ws = inject(WebService::class);
-    $this->level = new LevelComponent(['Level' => null]);
+    $this->level = new LevelComponent();
   }
 
 	/**
@@ -38,7 +39,7 @@ class NewLevelAction extends OAction {
 			$design = new Design();
 			if ($design->find(['id' => $id_design])){
 				if ($design->get('id_user') === $filter['id']){
-					$this->level->setValue('Level', $this->ws->createNewLevel($design, urldecode($name)));
+					$this->level->level = $this->ws->createNewLevel($design, urldecode($name));
 				}
 				else {
 					$this->status = 'error';

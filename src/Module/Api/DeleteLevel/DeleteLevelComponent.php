@@ -1,16 +1,17 @@
 <?php declare(strict_types=1);
 
-namespace Osumi\OsumiFramework\App\Module\Api\DeleteDesign;
+namespace Osumi\OsumiFramework\App\Module\Api\DeleteLevel;
 
-use Osumi\OsumiFramework\Routing\OAction;
+use Osumi\OsumiFramework\Core\OComponent;
 use Osumi\OsumiFramework\Web\ORequest;
 use Osumi\OsumiFramework\App\Model\Design;
+use Osumi\OsumiFramework\App\Model\Level;
 
-class DeleteDesignAction extends OAction {
+class DeleteLevelComponent extends OComponent {
   public string $status = 'ok';
 
 	/**
-	 * Función para borrar un diseño
+	 * Function description
 	 *
 	 * @param ORequest $req Request object with method, headers, parameters and filters used
 	 * @return void
@@ -24,10 +25,16 @@ class DeleteDesignAction extends OAction {
 		}
 
 		if ($this->status === 'ok') {
-			$design = new Design();
-			if ($design->find(['id' => $id])) {
-				if ($design->get('id_user') === $filter['id']) {
-					$design->deleteFull();
+			$level = new Level();
+			if ($level->find(['id' => $id])){
+				$design = new Design();
+				if ($design->find(['id' => $level->get('id_design')])) {
+					if ($design->get('id_user') === $filter['id']){
+						$level->delete();
+					}
+					else {
+						$this->status = 'error';
+					}
 				}
 				else {
 					$this->status = 'error';

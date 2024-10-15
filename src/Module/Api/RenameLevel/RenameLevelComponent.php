@@ -2,12 +2,12 @@
 
 namespace Osumi\OsumiFramework\App\Module\Api\RenameLevel;
 
-use Osumi\OsumiFramework\Routing\OAction;
+use Osumi\OsumiFramework\Core\OComponent;
 use Osumi\OsumiFramework\Web\ORequest;
 use Osumi\OsumiFramework\App\Model\Design;
 use Osumi\OsumiFramework\App\Model\Level;
 
-class RenameLevelAction extends OAction {
+class RenameLevelComponent extends OComponent {
   public string $status = 'ok';
 
 	/**
