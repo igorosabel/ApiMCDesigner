@@ -18,7 +18,7 @@ class LoginComponent extends OComponent {
 	 * @param ORequest $req Request object with method, headers, parameters and filters used
 	 * @return void
 	 */
-	public function run(ORequest $req):void {
+	public function run(ORequest $req): void {
 		$email = $req->getParamString('email');
 		$pass  = $req->getParamString('pass');
 
@@ -27,10 +27,10 @@ class LoginComponent extends OComponent {
 		}
 
 		if ($this->status === 'ok') {
-			$u = new User();
-			if ($u->find(['email' => $email])) {
-				if (password_verify($pass, $u->get('pass'))) {
-					$this->id = $u->get('id');
+			$u = User::findOne(['email' => $email]);
+			if (!is_null($u)) {
+				if (password_verify($pass, $u->pass)) {
+					$this->id = $u->id;
 
 					$tk = new OToken($this->getConfig()->getExtra('secret'));
 					$tk->addParam('id',    $this->id);

@@ -1,19 +1,19 @@
 <?php declare(strict_types=1);
 
-namespace Osumi\OsumiFramework\App\Module\Home\Closed;
+namespace Osumi\OsumiFramework\App\Module\Home\NotFound;
 
-use Osumi\OsumiFramework\Routing\OAction;
+use Osumi\OsumiFramework\Core\OComponent;
 use Osumi\OsumiFramework\Web\ORequest;
 use Osumi\OsumiFramework\Routing\OUrl;
 
-class ClosedAction extends OAction {
+class NotFoundComponent extends OComponent {
 	/**
-	 * Página temporal, sitio cerrado
+	 * Página de error 404
 	 *
 	 * @param ORequest $req Request object with method, headers, parameters and filters used
 	 * @return void
 	 */
-	public function run(ORequest $req):void {
+	public function run(ORequest $req): void {
 		OUrl::goToUrl('https://mcdesigner.osumi.es');
 	}
 }

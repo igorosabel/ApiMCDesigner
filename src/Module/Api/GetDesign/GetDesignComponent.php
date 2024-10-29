@@ -22,7 +22,7 @@ class GetDesignComponent extends OComponent {
 	 * @param ORequest $req Request object with method, headers, parameters and filters used
 	 * @return void
 	 */
-	public function run(ORequest $req):void {
+	public function run(ORequest $req): void {
 		$id     = $req->getParamInt('id');
 		$filter = $req->getFilter('Login');
 
@@ -31,9 +31,9 @@ class GetDesignComponent extends OComponent {
 		}
 
 		if ($this->status ==='ok') {
-			$d = new Design();
-			if ($d->find(['id' => $id])) {
-				if ($d->get('id_user') === $filter['id']) {
+			$d = Design::findOne(['id' => $id]);
+			if (!is_null($d)) {
+				if ($d->id_user === $filter['id']) {
 					$this->design->design = $d;
 				}
 				else {

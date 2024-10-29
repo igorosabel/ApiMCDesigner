@@ -2,72 +2,65 @@
 
 namespace Osumi\OsumiFramework\App\Model;
 
-use Osumi\OsumiFramework\DB\OModel;
-use Osumi\OsumiFramework\DB\OModelGroup;
-use Osumi\OsumiFramework\DB\OModelField;
+use Osumi\OsumiFramework\ORM\OModel;
+use Osumi\OsumiFramework\ORM\OPK;
+use Osumi\OsumiFramework\ORM\OField;
+use Osumi\OsumiFramework\ORM\OCreatedAt;
+use Osumi\OsumiFramework\ORM\OUpdatedAt;
 
 class Design extends OModel {
-	function __construct() {
-		$model = new OModelGroup(
-			new OModelField(
-				name: 'id',
-				type: OMODEL_PK,
-				comment: 'Clave única de cada diseño'
-			),
-			new OModelField(
-				name: 'id_user',
-				type: OMODEL_NUM,
-				nullable: false,
-				default: null,
-				ref: 'user.id',
-				comment: 'Id del usuario que hace el diseño'
-			),
-			new OModelField(
-				name: 'name',
-				type: OMODEL_TEXT,
-				nullable: false,
-				default: 'null',
-				size: 100,
-				comment: 'Nombre del diseño'
-			),
-			new OModelField(
-				name: 'slug',
-				type: OMODEL_TEXT,
-				nullable: false,
-				default: 'null',
-				size: 100,
-				comment: 'Slug del nombre del diseño'
-			),
-			new OModelField(
-				name: 'size_x',
-				type: OMODEL_NUM,
-				nullable: false,
-				default: 0,
-				comment: 'Anchura del diseño'
-			),
-			new OModelField(
-				name: 'size_y',
-				type: OMODEL_NUM,
-				nullable: false,
-				default: 0,
-				comment: 'Altura del diseño'
-			),
-			new OModelField(
-				name: 'created_at',
-				type: OMODEL_CREATED,
-				comment: 'Fecha de creación del registro'
-			),
-			new OModelField(
-				name: 'updated_at',
-				type: OMODEL_UPDATED,
-				nullable: true,
-				default: null,
-				comment: 'Fecha de última modificación del registro'
-			)
-		);
+	#[OPK(
+	  comment: 'Clave única de cada diseño'
+	)]
+	public ?int $id;
 
-		parent::load($model);
-	}
+	#[OField(
+	  comment: 'Id del usuario que hace el diseño',
+	  nullable: false,
+	  ref: 'user.id',
+	  default: null
+	)]
+	public ?int $id_user;
+
+	#[OField(
+	  comment: 'Nombre del diseño',
+	  nullable: false,
+	  max: 100,
+	  default: 'null'
+	)]
+	public ?string $name;
+
+	#[OField(
+	  comment: 'Slug del nombre del diseño',
+	  nullable: false,
+	  max: 100,
+	  default: 'null'
+	)]
+	public ?string $slug;
+
+	#[OField(
+	  comment: 'Anchura del diseño',
+	  nullable: false,
+	  default: 0
+	)]
+	public ?int $size_x;
+
+	#[OField(
+	  comment: 'Altura del diseño',
+	  nullable: false,
+	  default: 0
+	)]
+	public ?int $size_y;
+
+	#[OCreatedAt(
+	  comment: 'Fecha de creación del registro'
+	)]
+	public ?string $created_at;
+
+	#[OUpdatedAt(
+	  comment: 'Fecha de última modificación del registro'
+	)]
+	public ?string $updated_at;
 
 	private ?array $levels = null;
 
@@ -100,18 +93,7 @@ class Design extends OModel {
 	 * @return void
 	 */
 	public function loadLevels(): void {
-		$sql = "SELECT * FROM `level` WHERE `id_design` = ? ORDER BY `height` ASC";
-		$this->db->query($sql, [$this->get('id')]);
-
-		$levels = [];
-
-		while ($res = $this->db->next()) {
-			$level = new Level();
-			$level->update($res);
-
-			array_push($levels, $level);
-		}
-
+		$levels = Level::where(['id_design' => $this->id], ['order_by' => 'height#asc']);
 		$this->setLevels($levels);
 	}
 

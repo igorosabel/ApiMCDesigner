@@ -2,9 +2,9 @@
 	null
 <?php else: ?>
 	{
-		"id": <?php echo $level->get('id') ?>,
-		"name": "<?php echo urlencode($level->get('name')) ?>",
-		"height": <?php echo $level->get('height') ?>,
-		"data": <?php echo $level->get('data') ?>
+		"id": <?php echo $level->id ?>,
+		"name": "<?php echo urlencode($level->name) ?>",
+		"height": <?php echo $level->height ?>,
+		"data": <?php echo $level->data ?>
 	}
 <?php endif ?>

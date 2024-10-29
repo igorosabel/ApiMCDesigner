@@ -2,62 +2,55 @@
 
 namespace Osumi\OsumiFramework\App\Model;
 
-use Osumi\OsumiFramework\DB\OModel;
-use Osumi\OsumiFramework\DB\OModelGroup;
-use Osumi\OsumiFramework\DB\OModelField;
+use Osumi\OsumiFramework\ORM\OModel;
+use Osumi\OsumiFramework\ORM\OPK;
+use Osumi\OsumiFramework\ORM\OField;
+use Osumi\OsumiFramework\ORM\OCreatedAt;
+use Osumi\OsumiFramework\ORM\OUpdatedAt;
 
 class Note extends OModel {
-	function __construct() {
-		$model = new OModelGroup(
-			new OModelField(
-				name: 'id',
-				type: OMODEL_PK,
-				comment: 'Clave única de cada nota'
-			),
-			new OModelField(
-				name: 'id_level',
-				type: OMODEL_NUM,
-				nullable: false,
-				default: null,
-				ref: 'level.id',
-				comment: 'Id del nivel donde va la nota'
-			),
-			new OModelField(
-				name: 'pos_x',
-				type: OMODEL_NUM,
-				nullable: false,
-				default: 1,
-				comment: 'Posición X de la nota'
-			),
-			new OModelField(
-				name: 'pos_y',
-				type: OMODEL_NUM,
-				nullable: false,
-				default: 1,
-				comment: 'Posición Y de la nota'
-			),
-			new OModelField(
-				name: 'data',
-				type: OMODEL_LONGTEXT,
-				nullable: true,
-				default: null,
-				comment: 'Contenido de la nota'
-			),
-			new OModelField(
-				name: 'created_at',
-				type: OMODEL_CREATED,
-				comment: 'Fecha de creación del registro'
-			),
-			new OModelField(
-				name: 'updated_at',
-				type: OMODEL_UPDATED,
-				nullable: true,
-				default: null,
-				comment: 'Fecha de última modificación del registro'
-			)
-		);
+	#[OPK(
+	  comment: 'Clave única de cada nota'
+	)]
+	public ?int $id;
 
+	#[OField(
+	  comment: 'Id del nivel donde va la nota',
+	  nullable: false,
+	  ref: 'level.id',
+	  default: null
+	)]
+	public ?int $id_level;
 
-		parent::load($model);
-	}
+	#[OField(
+	  comment: 'Posición X de la nota',
+	  nullable: false,
+	  default: 1
+	)]
+	public ?int $pos_x;
+
+	#[OField(
+	  comment: 'Posición Y de la nota',
+	  nullable: false,
+	  default: 1
+	)]
+	public ?int $pos_y;
+
+	#[OField(
+	  comment: 'Contenido de la nota',
+	  nullable: true,
+	  default: null,
+	  type: OField::LONGTEXT
+	)]
+	public ?string $data;
+
+	#[OCreatedAt(
+	  comment: 'Fecha de creación del registro'
+	)]
+	public ?string $created_at;
+
+	#[OUpdatedAt(
+	  comment: 'Fecha de última modificación del registro'
+	)]
+	public ?string $updated_at;
 }

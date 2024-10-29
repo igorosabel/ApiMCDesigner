@@ -15,7 +15,7 @@ class DeleteDesignComponent extends OComponent {
 	 * @param ORequest $req Request object with method, headers, parameters and filters used
 	 * @return void
 	 */
-	public function run(ORequest $req):void {
+	public function run(ORequest $req): void {
 		$id     = $req->getParamInt('id');
 		$filter = $req->getFilter('Login');
 
@@ -24,9 +24,9 @@ class DeleteDesignComponent extends OComponent {
 		}
 
 		if ($this->status === 'ok') {
-			$design = new Design();
-			if ($design->find(['id' => $id])) {
-				if ($design->get('id_user') === $filter['id']) {
+			$design = Design::findOne(['id' => $id]);
+			if (!is_null($design)) {
+				if ($design->id_user === $filter['id']) {
 					$design->deleteFull();
 				}
 				else {

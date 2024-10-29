@@ -16,7 +16,7 @@ class RenameLevelComponent extends OComponent {
 	 * @param ORequest $req Request object with method, headers, parameters and filters used
 	 * @return void
 	 */
-	public function run(ORequest $req):void {
+	public function run(ORequest $req): void {
 		$id        = $req->getParamInt('id');
 		$id_design = $req->getParamInt('idDesign');
 		$name      = $req->getParamString('name');
@@ -27,12 +27,12 @@ class RenameLevelComponent extends OComponent {
 		}
 
 		if ($this->status === 'ok') {
-			$design = new Design();
-			if ($design->find(['id' => $id_design])) {
-				if ($design->get('id_user') === $filter['id']) {
-					$level = new Level();
-					if ($level->find(['id' => $id])) {
-						$level->set('name', $name);
+			$design = Design::findOne(['id' => $id_design]);
+			if (!is_null($design)) {
+				if ($design->id_user === $filter['id']) {
+					$level = Level::findOne(['id' => $id]);
+					if (!is_null($level)) {
+						$level->name = $name;
 						$level->save();
 					}
 					else {

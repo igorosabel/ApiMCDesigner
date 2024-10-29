@@ -27,7 +27,7 @@ class CopyLevelComponent extends OComponent {
 	 * @param ORequest $req Request object with method, headers, parameters and filters used
 	 * @return void
 	 */
-	public function run(ORequest $req):void {
+	public function run(ORequest $req): void {
 		$id     = $req->getParamInt('id');
 		$filter = $req->getFilter('Login');
 
@@ -36,11 +36,11 @@ class CopyLevelComponent extends OComponent {
 		}
 
 		if ($this->status === 'ok') {
-			$level = new Level();
-			if ($level->find(['id' => $id])){
-				$design = new Design();
-				if ($design->find(['id' => $level->get('id_design')])) {
-					if ($design->get('id_user') === $filter['id']){
+			$level = Level::findOne(['id' => $id]);
+			if (!is_null($level)){
+				$design = Design::findOne(['id' => $level->id_design]);
+				if (!is_null($design)) {
+					if ($design->id_user === $filter['id']) {
 						$this->level->level = $this->ws->copyLevel($design, $level);
 					}
 					else {

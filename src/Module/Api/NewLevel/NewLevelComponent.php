@@ -36,9 +36,9 @@ class NewLevelComponent extends OComponent {
 		}
 
 		if ($this->status === 'ok') {
-			$design = new Design();
-			if ($design->find(['id' => $id_design])){
-				if ($design->get('id_user') === $filter['id']){
+			$design = Design::findOne(['id' => $id_design]);
+			if (!is_null($design)){
+				if ($design->id_user === $filter['id']){
 					$this->level->level = $this->ws->createNewLevel($design, urldecode($name));
 				}
 				else {

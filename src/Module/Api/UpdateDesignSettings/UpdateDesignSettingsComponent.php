@@ -24,7 +24,7 @@ class UpdateDesignSettingsComponent extends OComponent {
 	 * @param ORequest $req Request object with method, headers, parameters and filters used
 	 * @return void
 	 */
-	public function run(ORequest $req):void {
+	public function run(ORequest $req): void {
 		$id     = $req->getParamInt('id');
 		$name   = $req->getParamString('name');
 		$size_x = $req->getParamInt('sizeX');
@@ -36,14 +36,14 @@ class UpdateDesignSettingsComponent extends OComponent {
 		}
 
 		if ($this->status === 'ok') {
-			$design = new Design();
-			if ($design->find(['id' => $id])) {
-				if ($design->get('id_user') === $filter['id']) {
-					$design->set('name', urldecode($name));
-					$design->set('slug', OTools::slugify(urldecode($name)));
+			$design = Design::findOne(['id' => $id]);
+			if (!is_null($design)) {
+				if ($design->id_user === $filter['id']) {
+					$design->name = urldecode($name);
+					$design->slug = OTools::slugify(urldecode($name));
 					$design->save();
 
-					if ($size_x !== $design->get('size_x') || $size_y !== $design->sizeY) {
+					if ($size_x !== $design->size_x || $size_y !== $design->size_y) {
 						$this->ws->updateDesignSize($design, $size_x, $size_y);
 					}
 				}

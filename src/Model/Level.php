@@ -2,63 +2,56 @@
 
 namespace Osumi\OsumiFramework\App\Model;
 
-use Osumi\OsumiFramework\DB\OModel;
-use Osumi\OsumiFramework\DB\OModelGroup;
-use Osumi\OsumiFramework\DB\OModelField;
+use Osumi\OsumiFramework\ORM\OModel;
+use Osumi\OsumiFramework\ORM\OPK;
+use Osumi\OsumiFramework\ORM\OField;
+use Osumi\OsumiFramework\ORM\OCreatedAt;
+use Osumi\OsumiFramework\ORM\OUpdatedAt;
 
 class Level extends OModel {
-	function __construct() {
-		$model = new OModelGroup(
-			new OModelField(
-				name: 'id',
-				type: OMODEL_PK,
-				comment: 'Clave única de cada nivel de un diseño'
-			),
-			new OModelField(
-				name: 'id_design',
-				type: OMODEL_NUM,
-				nullable: false,
-				default: null,
-				ref: 'design.id',
-				comment: 'Id del diseño al que pertenece el nivel'
-			),
-			new OModelField(
-				name: 'name',
-				type: OMODEL_TEXT,
-				nullable: false,
-				default: null,
-				size: 100,
-				comment: 'Nombre del nivel'
-			),
-			new OModelField(
-				name: 'height',
-				type: OMODEL_NUM,
-				nullable: false,
-				default: 1,
-				comment: 'Altura o piso del nivel dentro del diseño'
-			),
-			new OModelField(
-				name: 'data',
-				type: OMODEL_LONGTEXT,
-				nullable: true,
-				default: null,
-				comment: 'Datos del diseño del nivel'
-			),
-			new OModelField(
-				name: 'created_at',
-				type: OMODEL_CREATED,
-				comment: 'Fecha de creación del registro'
-			),
-			new OModelField(
-				name: 'updated_at',
-				type: OMODEL_UPDATED,
-				nullable: true,
-				default: null,
-				comment: 'Fecha de última modificación del registro'
-			)
-		);
+	#[OPK(
+	  comment: 'Clave única de cada nivel de un diseño'
+	)]
+	public ?int $id;
 
+	#[OField(
+	  comment: 'Id del diseño al que pertenece el nivel',
+	  nullable: false,
+	  ref: 'design.id',
+	  default: null
+	)]
+	public ?int $id_design;
 
-		parent::load($model);
-	}
+	#[OField(
+	  comment: 'Nombre del nivel',
+	  nullable: false,
+	  max: 100,
+	  default: null
+	)]
+	public ?string $name;
+
+	#[OField(
+	  comment: 'Altura o piso del nivel dentro del diseño',
+	  nullable: false,
+	  default: 1
+	)]
+	public ?int $height;
+
+	#[OField(
+	  comment: 'Datos del diseño del nivel',
+	  nullable: true,
+	  default: null,
+	  type: OField::LONGTEXT
+	)]
+	public ?string $data;
+
+	#[OCreatedAt(
+	  comment: 'Fecha de creación del registro'
+	)]
+	public ?string $created_at;
+
+	#[OUpdatedAt(
+	  comment: 'Fecha de última modificación del registro'
+	)]
+	public ?string $updated_at;
 }

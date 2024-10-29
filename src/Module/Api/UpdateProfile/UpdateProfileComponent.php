@@ -27,13 +27,13 @@ class UpdateProfileComponent extends OComponent {
 		}
 
 		if ($this->status === 'ok') {
-			$u = new User();
-			if ($u->find(['id' => $filter['id']])) {
-				$u->set('email', $email);
+			$u = User::findOne(['id' => $filter['id']]);
+			if (!is_null($u)) {
+				$u->email = $email;
 
 				if ($old_pass !== '' && $new_pass !== '' && $conf_pass !== '' && $new_pass === $conf_pass) {
-					if (password_verify($old_pass, $u->get('pass'))) {
-						$u->set('pass', password_hash($new_pass, PASSWORD_BCRYPT));
+					if (password_verify($old_pass, $u->pass)) {
+						$u->pass = password_hash($new_pass, PASSWORD_BCRYPT);
 					}
 					else {
 						$this->status = 'pass-error';
