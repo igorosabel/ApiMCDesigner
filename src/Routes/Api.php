@@ -27,9 +27,9 @@ ORoute::prefix('/api', function() {
   ORoute::post('/login',                  LoginComponent::class);
   ORoute::post('/new-design',             NewDesignComponent::class,            [LoginFilter::class]);
   ORoute::post('/new-level',              NewLevelComponent::class,             [LoginFilter::class]);
-  ORoute::post('/register',               DeleteEntryComponent::class);
+  ORoute::post('/register',               RegisterComponent::class);
   ORoute::post('/rename-level',           RenameLevelComponent::class,          [LoginFilter::class]);
   ORoute::post('/update-design',          UpdateDesignComponent::class,         [LoginFilter::class]);
   ORoute::post('/update-design-settings', UpdateDesignSettingsComponent::class, [LoginFilter::class]);
-  ORoute::post('/update-profile',         DeleteEntryComponent::class,          [LoginFilter::class]);
+  ORoute::post('/update-profile',         UpdateProfileComponent::class,        [LoginFilter::class]);
 });

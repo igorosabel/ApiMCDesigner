@@ -41,7 +41,7 @@ class WebService extends OService {
 			else {
 				// Si faltan líneas por añadir, las añado en blanco
 				for ($i = 0; $i < ($size_y-count($data)); $i++) {
-					array_push($data, []);
+					$data[] = [];
 				}
 			}
 
@@ -54,7 +54,7 @@ class WebService extends OService {
 				else {
 					// Si faltan columnas por añadir, las añado con valor 0
 					for ($j = 0; $j < ($size_x-count($data[$i])); $j++) {
-						array_push($data[$i], 0);
+						$data[$i][] = 0;
 					}
 				}
 			}
@@ -73,20 +73,20 @@ class WebService extends OService {
 	 *
 	 * @param Design $design Diseño al que añadir un nivel
 	 *
-	 * @param string $name Nombre del diseño (opcional)
+	 * @param string | null $name Nombre del diseño (opcional)
 	 *
 	 * @return Level Devuelve el nuevo nivel creado
 	 */
-	public function createNewLevel(Design $design, string $name=null): Level {
+	public function createNewLevel(Design $design, string | null $name = null): Level {
 		$levels = $design->getLevels();
 
 		$data = [];
 		for ($i = 0; $i < $design->size_y; $i++) {
 			$row = [];
 			for ($j = 0; $j < $design->size_x; $j++) {
-				array_push($row, 0);
+				$row[] = 0;
 			}
-			array_push($data, $row);
+			$data[] = $row;
 		}
 
 		$level = Level::create();
