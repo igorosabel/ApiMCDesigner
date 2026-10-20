@@ -26,7 +26,7 @@ class LoadDesignsComponent extends OComponent {
 	 * @return void
 	 */
 	public function run(ORequest $req): void {
-		$filter = $req->getFilter('Login');
+		$filter = $req->getMiddleware('Login');
 
 		if (is_null($filter) || !array_key_exists('id', $filter)) {
 			$this->status = 'error';

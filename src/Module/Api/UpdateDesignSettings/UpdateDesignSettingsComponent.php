@@ -29,7 +29,7 @@ class UpdateDesignSettingsComponent extends OComponent {
 		$name   = $req->getParamString('name');
 		$size_x = $req->getParamInt('sizeX');
 		$size_y = $req->getParamInt('sizeY');
-		$filter = $req->getFilter('Login');
+		$filter = $req->getMiddleware('Login');
 
 		if (is_null($id) || is_null($name) || is_null($size_x) || is_null($size_y) || is_null($filter) || !array_key_exists('id', $filter)) {
 			$this->status = 'error';

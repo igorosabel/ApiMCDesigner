@@ -20,7 +20,7 @@ class RenameLevelComponent extends OComponent {
 		$id        = $req->getParamInt('id');
 		$id_design = $req->getParamInt('idDesign');
 		$name      = $req->getParamString('name');
-		$filter    = $req->getFilter('Login');
+		$filter    = $req->getMiddleware('Login');
 
 		if (is_null($id) || is_null($id_design) || is_null($name) || is_null($filter) || !array_key_exists('id', $filter)) {
 			$this->status = 'error';

@@ -20,7 +20,7 @@ class UpdateProfileComponent extends OComponent {
 		$old_pass  = $req->getParamString('oldPass');
 		$new_pass  = $req->getParamString('newPass');
 		$conf_pass = $req->getParamString('confPass');
-		$filter    = $req->getFilter('Login');
+		$filter    = $req->getMiddleware('Login');
 
 		if (is_null($email) || is_null($filter) || !array_key_exists('id', $filter)) {
 			$this->status = 'error';
